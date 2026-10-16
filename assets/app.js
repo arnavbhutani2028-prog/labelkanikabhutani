@@ -47,7 +47,7 @@ function art(p) {
   const stand = `<rect x="98" y="34" width="4" height="30" fill="#b9a68a"/><ellipse cx="100" cy="33" rx="9" ry="5" fill="#b9a68a"/>`;
   const blouse = `<path d="M76 68 Q100 58 124 68 L128 112 Q100 118 72 112 Z" fill="${c}"/><path d="M76 68 Q100 58 124 68 L128 112 Q100 118 72 112 Z" fill="url(#pt${uid})" opacity=".5"/><path d="M86 66 Q100 80 114 66" stroke="${a}" stroke-width="3" fill="none"/>`;
   let body = "";
-  if (p.category === "Lehenga") {
+  if (!["Saree", "Gown", "Jewellery", "Accessories"].includes(p.category)) {
     body = `${stand}${blouse}
       <path d="M72 112 Q100 118 128 112 L172 236 Q100 252 28 236 Z" fill="${c}"/>
       <path d="M72 112 Q100 118 128 112 L172 236 Q100 252 28 236 Z" fill="url(#pt${uid})" opacity=".55"/>
@@ -112,9 +112,9 @@ function renderChrome() {
   </div></header>`);
   document.body.insertAdjacentHTML("beforeend", `
   <footer class="site-footer"><div class="wrap foot">
-    <div><div class="logo light">${BRAND.name}<small>${BRAND.tagline}</small></div><p>Handcrafted bridal wear, made-to-measure and shipped directly from our ${BRAND.city} atelier to you.</p></div>
-    <div><h4>Shop</h4><a href="shop.html?cat=Lehenga">Lehengas</a><a href="shop.html?cat=Saree">Sarees</a><a href="shop.html?cat=Gown">Gowns</a><a href="shop.html?cat=Accessories">Accessories</a></div>
-    <div><h4>Help</h4><a href="stylist.html">AI Bridal Stylist</a><a href="consult.html">Book a consultation</a><a href="mailto:${BRAND.email}">${BRAND.email}</a><span>${BRAND.phone}</span></div>
+    <div><div class="logo light">${BRAND.name}<small>${BRAND.tagline}</small></div><p>Handcrafted festive and bridal wear, made-to-measure and shipped directly from our ${BRAND.city} atelier to you.</p></div>
+    <div><h4>Shop</h4>${CATEGORIES.map(c => `<a href="shop.html?cat=${encodeURIComponent(c)}">${CAT_LABEL[c]}</a>`).join("")}</div>
+    <div><h4>Help</h4><a href="stylist.html">AI Stylist</a><a href="consult.html">Book a consultation</a><a href="cart.html">Your bag</a></div>
   </div><p class="copy">© ${new Date().getFullYear()} ${BRAND.name}. All rights reserved.</p></footer>`);
   document.title = document.title.replace("{BRAND}", BRAND.name);
   updateCartBadge();
@@ -122,15 +122,16 @@ function renderChrome() {
 
 // ===== Pages =====
 function pageHome() {
-  $("#featured").innerHTML = ["L01", "L03", "S01", "G01"].map(id => card(byId(id))).join("");
-  $("#hero-art").innerHTML = art(byId("L01"));
+  $("#featured").innerHTML = ["G01", "A01", "G03", "G06"].map(id => card(byId(id))).join("");
+  $("#hero-art").innerHTML = media(byId("G01"));
+  $$(".cat-tile[data-img]").forEach(t => { const p = byId(t.dataset.img); if (p?.img) t.style.setProperty("--g", `linear-gradient(180deg,transparent 45%,rgba(30,10,14,.75)), url("${p.img}") center/cover`); });
 }
 
 function pageShop() {
   const q = new URLSearchParams(location.search);
   const state = { cat: q.get("cat") || "All", family: "", event: q.get("event") || "", max: 100000, sort: "featured" };
-  const cats = ["All", "Lehenga", "Saree", "Gown", "Accessories"];
-  $("#f-cat").innerHTML = cats.map(c => `<button data-cat="${c}">${c === "All" ? "All" : c + (c === "Accessories" ? "" : "s")}</button>`).join("");
+  const cats = ["All", ...CATEGORIES];
+  $("#f-cat").innerHTML = cats.map(c => `<button data-cat="${c}">${c === "All" ? "All" : CAT_LABEL[c]}</button>`).join("");
   $("#f-event").innerHTML = `<option value="">Any occasion</option>` + EVENTS.map(e => `<option value="${e}">${cap(e)}</option>`).join("");
   $("#f-family").innerHTML = FAMILIES.map(f => `<button class="swatch" data-f="${f}" title="${cap(f)}" style="background:${FAMILY_SWATCH[f]}"></button>`).join("");
   $("#f-event").value = state.event;
@@ -158,11 +159,11 @@ function pageShop() {
 function pageProduct() {
   const p = byId(new URLSearchParams(location.search).get("id")) || PRODUCTS[0];
   document.title = `${p.name} · ${BRAND.name}`;
-  const sizes = p.category === "Accessories" ? ["One size"] : SIZES;
+  const sizes = p.category === "Jewellery" ? ["One size"] : SIZES;
   $("#product").innerHTML = `
     <div class="pd-img">${media(p)}</div>
     <div class="pd-info">
-      <a href="shop.html?cat=${p.category}" class="crumb">← ${p.category}s</a>
+      <a href="shop.html?cat=${encodeURIComponent(p.category)}" class="crumb">← ${CAT_LABEL[p.category]}</a>
       <h1>${esc(p.name)}</h1>
       <p class="pd-price">${inr(p.price)} <span>incl. all taxes</span></p>
       <p>${esc(p.desc)}</p>
@@ -264,19 +265,19 @@ function localStylist(prefs) {
     if (prefs.colors?.length && prefs.colors.includes(p.family)) s += 3;
     if (prefs.budget) s += p.price <= prefs.budget ? 3 - (prefs.budget - p.price) / prefs.budget : -6;
     if (prefs.vibe && p.style.includes(prefs.vibe)) s += 2;
-    if (words && (words.includes(p.category.toLowerCase()) || words.includes(p.family))) s += 1.5;
-    if (prefs.body === "petite" && ["Saree", "Gown"].includes(p.category)) s += .5;
-    if (prefs.body === "curvy" && p.category === "Lehenga") s += .5;
+    if (words && (words.includes(p.category.toLowerCase().split(" ")[0]) || words.includes(p.family))) s += 1.5;
+    if (prefs.body === "petite" && ["Kurta Set", "Co-ord Set"].includes(p.category)) s += .5;
+    if (prefs.body === "curvy" && ["Anarkali", "Gharara"].includes(p.category)) s += .5;
     return { p, s };
   }).sort((a, b) => b.s - a.s);
-  const picks = scored.filter(x => x.p.category !== "Accessories").slice(0, 3);
-  const acc = scored.find(x => x.p.category === "Accessories");
+  const picks = scored.filter(x => x.p.category !== "Jewellery").slice(0, 3);
+  const acc = scored.find(x => x.p.category === "Jewellery");
   if (acc) picks.push(acc);
   const ev = prefs.event ? cap(prefs.event) : "your function";
   return {
     message: `For ${ev}${prefs.budget ? ` within ${inr(prefs.budget)}` : ""}, I'd start with the ${picks[0].p.name} — ${picks[0].p.desc.split(".")[0].toLowerCase()}. ` +
       `The ${picks[1]?.p.name || ""} is a great second option, and I've added ${acc ? "the " + acc.p.name : "an accessory"} to complete the look.` +
-      (prefs.body ? ` Tip for a ${prefs.body} frame: ${{ petite: "go for lighter fabrics and vertical embroidery to add height.", curvy: "an A-line or kalidaar silhouette with a structured blouse looks stunning.", tall: "heavy borders and wide flares will look regal on you.", athletic: "a corset-style blouse adds soft definition at the waist." }[prefs.body] || ""}` : ""),
+      (prefs.body ? ` Tip for a ${prefs.body} frame: ${{ petite: "go for shorter kurtas, lighter fabrics and vertical embroidery to add height.", curvy: "an anarkali or a kalidaar kurta with a gharara looks stunning.", tall: "long kurtas and wide gharara flares will look regal on you.", athletic: "a flared anarkali adds soft movement and shape." }[prefs.body] || ""}` : ""),
     picks: picks.map(x => ({ id: x.p.id, why: `${cap(x.p.style)} · ${x.p.fabric}` })),
     source: "local"
   };
@@ -307,7 +308,7 @@ function pageStylist() {
   function showResult(res) {
     $("#chat").insertAdjacentHTML("beforeend", `<div class="msg ai"><p>${esc(res.message).replace(/\n/g, "<br>")}</p>
       ${res.picks?.length ? `<div class="picks">${res.picks.map(x => { const p = byId(x.id); return `<a class="pick" href="product.html?id=${p.id}"><div>${media(p)}</div><strong>${esc(p.name)}</strong><span>${inr(p.price)}</span>${x.why ? `<em>${esc(x.why)}</em>` : ""}</a>`; }).join("")}</div>` : ""}
-      ${res.source === "local" ? `<small class="src">Recommended by Saanjh's styling engine</small>` : `<small class="src">✦ AI-generated recommendation</small>`}</div>`);
+      ${res.source === "local" ? `<small class="src">Recommended by ${BRAND.name}'s styling engine</small>` : `<small class="src">✦ AI-generated recommendation</small>`}</div>`);
     history.push({ role: "assistant", text: res.message });
     $("#chat").scrollTop = 1e6;
   }

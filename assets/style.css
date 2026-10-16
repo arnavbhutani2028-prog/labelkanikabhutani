@@ -222,3 +222,6 @@ dt{color:var(--muted)}dd{margin:0}
 .card .price{font-weight:400;color:var(--muted);font-size:1.05rem;margin-top:6px}
 .pd-img img,.ci-img img,.pick img{width:100%;aspect-ratio:3/4;object-fit:cover}
 @media (max-width:560px){.grid{grid-template-columns:repeat(2,1fr);gap:28px 12px}.card h3{font-size:1rem}.card .price{font-size:.9rem}}
+
+#hero-art img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.cat-tile::before{background:var(--g)}
