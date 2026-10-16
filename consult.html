@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/style.css"><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪷</text></svg>"><title>Book a Consultation · {BRAND}</title></head>
+<body data-page="consult">
+<div class="page-head"><div class="wrap"><h1>Book a free consultation</h1><p>30 minutes with a bridal stylist — on video or at our studio</p></div></div>
+<div class="wrap"><div class="form-card" id="consult-box">
+<form id="consult-form" novalidate>
+  <div class="row"><div><label class="lbl">Your name</label><input name="name" required data-label="Name"></div>
+  <div><label class="lbl">Mobile</label><input name="phone" required pattern="[6-9][0-9]{9}" inputmode="numeric" data-label="Mobile (10 digits)"></div></div>
+  <label class="lbl">Email</label><input name="email" type="email" required data-label="Email">
+  <label class="lbl">How would you like to meet?</label>
+  <div class="radio-row"><label><input type="radio" name="mode" value="video" checked> Video call</label><label><input type="radio" name="mode" value="studio"> Studio visit</label></div>
+  <div class="row"><div><label class="lbl">Date</label><input name="date" type="date" required data-label="Date"></div>
+  <div><label class="lbl">Time slot</label><select name="slot" required data-label="Time slot"><option>11:00 AM</option><option>1:00 PM</option><option>3:00 PM</option><option>5:00 PM</option><option>7:00 PM</option></select></div></div>
+  <label class="lbl">Wedding date (optional)</label><input name="wedding" type="date">
+  <label class="lbl">What are you looking for?</label><textarea name="notes" rows="3" placeholder="e.g. Red lehenga for pheras, budget around ₹70k"></textarea>
+  <p class="err" id="c-err"></p>
+  <button class="btn full" type="submit">Confirm booking</button>
+</form></div></div>
+<script src="assets/products.js"></script><script src="assets/app.js"></script></body></html>

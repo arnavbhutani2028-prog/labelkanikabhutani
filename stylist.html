@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@400;500&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/style.css"><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪷</text></svg>"><title>AI Bridal Stylist · {BRAND}</title></head>
+<body data-page="stylist">
+<div class="page-head"><div class="wrap"><span class="eyebrow">✦ Powered by AI</span><h1>Your AI Bridal Stylist</h1><p>Tell us about your function — get personalised picks from our collection in seconds.</p></div></div>
+<div class="wrap stylist-wrap">
+  <form class="form-card" id="stylist-form">
+    <label class="lbl" style="margin-top:0">Which function?</label><select name="event" id="s-event"></select>
+    <label class="lbl">Budget (₹)</label>
+    <select name="budget"><option value="25000">Up to ₹25,000</option><option value="45000">Up to ₹45,000</option><option value="65000" selected>Up to ₹65,000</option><option value="90000">Up to ₹90,000</option><option value="0">No limit</option></select>
+    <label class="lbl">Colours you love</label><div class="chips" id="s-colors"></div>
+    <label class="lbl">Vibe</label>
+    <select name="vibe"><option value="">Surprise me</option><option value="traditional">Traditional</option><option value="modern">Modern minimal</option><option value="glam">Glam</option><option value="light">Light & breezy</option></select>
+    <label class="lbl">Body type (optional)</label>
+    <select name="body"><option value="">Prefer not to say</option><option value="petite">Petite</option><option value="curvy">Curvy</option><option value="tall">Tall</option><option value="athletic">Athletic</option></select>
+    <label class="lbl">Anything else?</label><textarea name="notes" rows="2" placeholder="e.g. Winter wedding in Jaipur, want something not too heavy"></textarea>
+    <button class="btn full" type="submit">✦ Style me</button>
+  </form>
+  <div id="stylist-out-wrap">
+    <div id="stylist-out" hidden><div id="chat"></div>
+      <form id="followup"><input placeholder="Ask a follow-up, e.g. 'Something lighter?'" aria-label="Follow-up question"><button class="btn">Ask</button></form></div>
+    <div class="out-empty" id="out-empty"><div class="big">✦</div><h3>Your personalised looks will appear here</h3><p>Fill in your preferences and tap <b>Style me</b>.</p></div>
+  </div>
+</div>
+<script src="assets/products.js"></script><script src="assets/app.js"></script></body></html>
