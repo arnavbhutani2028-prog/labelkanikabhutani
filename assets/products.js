@@ -1,6 +1,6 @@
 // ===== Store config =====
 const BRAND = {
-  name: "Misri",
+  name: "Saanjh",
   tagline: "Festive & Bridal Couture",
   city: "New Delhi"
 };
@@ -82,15 +82,11 @@ const PRODUCTS = [
   { id: "J02", name: "Polki Gold Plated Silver Ring With Pearls", category: "Jewellery", price: 14300, family: "gold",
     img: cdn("products/2_40ebcf2f-5b24-44ec-81c6-005089a24479.png?v=1613114057"),
     events: ["wedding", "engagement", "reception"], fabric: "Gold-plated silver, polki & pearls", style: "traditional",
-    desc: "An all-white polki ring finished with pearls." },
-  { id: "J03", name: "Amna Embroidered Potli – Cream", category: "Jewellery", price: 2799, family: "ivory",
-    img: cdn("products/MisriFinalImageSize_ae7526e4-7091-4208-9632-ea9053ea5c76.png?v=1611819747"),
-    events: ["mehendi", "sangeet", "engagement", "haldi"], fabric: "Embroidered potli bag", style: "boho light",
-    desc: "A cream embroidered potli to carry through every function." }
+    desc: "An all-white polki ring finished with pearls." }
 ];
 
 const CATEGORIES = ["Gharara", "Anarkali", "Kurta Set", "Co-ord Set", "Farshi Set", "Jewellery"];
-const CAT_LABEL = { "Gharara": "Ghararas", "Anarkali": "Anarkalis", "Kurta Set": "Kurta Sets", "Co-ord Set": "Co-ords", "Farshi Set": "Farshi Sets", "Jewellery": "Jewellery & Potlis" };
+const CAT_LABEL = { "Gharara": "Ghararas", "Anarkali": "Anarkalis", "Kurta Set": "Kurta Sets", "Co-ord Set": "Co-ords", "Farshi Set": "Farshi Sets", "Jewellery": "Jewellery" };
 const SIZES = ["XS", "S", "M", "L", "XL", "Custom"];
 const EVENTS = ["wedding", "reception", "sangeet", "mehendi", "haldi", "engagement"];
 const FAMILIES = ["red", "pink", "ivory", "gold", "yellow", "green", "blue", "purple", "peach"];
