@@ -208,3 +208,17 @@ dt{color:var(--muted)}dd{margin:0}
   .card h3{font-size:1.05rem}
   #hero-art{max-width:260px;justify-self:center}
 }
+
+/* Editorial product cards (photo-first, centred text) */
+.grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:40px 28px}
+.card{background:none;border:0;text-align:center}
+.card:hover{transform:none;box-shadow:none}
+.card-img{border:0;aspect-ratio:3/4;overflow:hidden;background:var(--cream)}
+.card-img img,.card-img svg{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.card:hover .card-img img,.card:hover .card-img svg{transform:scale(1.04)}
+.card-body{padding:18px 6px 0}
+.card h3{font-family:var(--sans);font-weight:400;font-size:1.25rem;line-height:1.35;color:var(--ink)}
+.card .cat{display:none}
+.card .price{font-weight:400;color:var(--muted);font-size:1.05rem;margin-top:6px}
+.pd-img img,.ci-img img,.pick img{width:100%;aspect-ratio:3/4;object-fit:cover}
+@media (max-width:560px){.grid{grid-template-columns:repeat(2,1fr);gap:28px 12px}.card h3{font-size:1rem}.card .price{font-size:.9rem}}

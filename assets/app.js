@@ -87,10 +87,15 @@ function art(p) {
   return `<svg viewBox="0 0 200 260" role="img" aria-label="${esc(p.name)}" xmlns="http://www.w3.org/2000/svg">${bg}${body}</svg>`;
 }
 
+// Use a real photo when a product has one (p.img), otherwise the drawn illustration
+function media(p) {
+  return p.img ? `<img src="${p.img}" alt="${esc(p.name)}" loading="lazy">` : art(p);
+}
+
 function card(p) {
   return `<a class="card" href="product.html?id=${p.id}">
-    <div class="card-img">${art(p)}</div>
-    <div class="card-body"><span class="cat">${p.category}</span><h3>${esc(p.name)}</h3><p class="price">${inr(p.price)}</p></div></a>`;
+    <div class="card-img">${media(p)}</div>
+    <div class="card-body"><span class="cat">${p.category}</span><h3>${esc(p.name)}</h3><p class="price">From ${inr(p.price)}</p></div></a>`;
 }
 
 // ===== Shared header & footer =====
@@ -155,7 +160,7 @@ function pageProduct() {
   document.title = `${p.name} · ${BRAND.name}`;
   const sizes = p.category === "Accessories" ? ["One size"] : SIZES;
   $("#product").innerHTML = `
-    <div class="pd-img">${art(p)}</div>
+    <div class="pd-img">${media(p)}</div>
     <div class="pd-info">
       <a href="shop.html?cat=${p.category}" class="crumb">← ${p.category}s</a>
       <h1>${esc(p.name)}</h1>
@@ -187,7 +192,7 @@ function pageCart() {
     const sub = Cart.subtotal();
     $("#cart").innerHTML = `
       <div class="cart-items">${items.map((i, idx) => { const p = byId(i.id); if (!p) return ""; return `
-        <div class="ci"><div class="ci-img">${art(p)}</div>
+        <div class="ci"><div class="ci-img">${media(p)}</div>
           <div class="ci-info"><a href="product.html?id=${p.id}"><strong>${esc(p.name)}</strong></a><span>Size: ${i.size}</span><span>${inr(p.price)}</span></div>
           <div class="ci-qty"><button data-i="${idx}" data-d="-1" aria-label="Decrease">−</button><span>${i.qty}</span><button data-i="${idx}" data-d="1" aria-label="Increase">+</button></div>
           <strong class="ci-total">${inr(p.price * i.qty)}</strong></div>`; }).join("")}
@@ -301,7 +306,7 @@ function pageStylist() {
 
   function showResult(res) {
     $("#chat").insertAdjacentHTML("beforeend", `<div class="msg ai"><p>${esc(res.message).replace(/\n/g, "<br>")}</p>
-      ${res.picks?.length ? `<div class="picks">${res.picks.map(x => { const p = byId(x.id); return `<a class="pick" href="product.html?id=${p.id}"><div>${art(p)}</div><strong>${esc(p.name)}</strong><span>${inr(p.price)}</span>${x.why ? `<em>${esc(x.why)}</em>` : ""}</a>`; }).join("")}</div>` : ""}
+      ${res.picks?.length ? `<div class="picks">${res.picks.map(x => { const p = byId(x.id); return `<a class="pick" href="product.html?id=${p.id}"><div>${media(p)}</div><strong>${esc(p.name)}</strong><span>${inr(p.price)}</span>${x.why ? `<em>${esc(x.why)}</em>` : ""}</a>`; }).join("")}</div>` : ""}
       ${res.source === "local" ? `<small class="src">Recommended by Saanjh's styling engine</small>` : `<small class="src">✦ AI-generated recommendation</small>`}</div>`);
     history.push({ role: "assistant", text: res.message });
     $("#chat").scrollTop = 1e6;
