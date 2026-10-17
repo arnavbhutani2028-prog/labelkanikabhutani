@@ -13,8 +13,8 @@ const store = {
 
 // ===== Cart =====
 const Cart = {
-  items() { return store.get("saanjh_cart", []); },
-  save(items) { store.set("saanjh_cart", items); updateCartBadge(); },
+  items() { return store.get("lkb_cart", []); },
+  save(items) { store.set("lkb_cart", items); updateCartBadge(); },
   add(id, size, qty = 1) {
     const items = this.items();
     const f = items.find(i => i.id === id && i.size === size);
@@ -225,8 +225,8 @@ function pageCart() {
       const f = e.target, bad = $$("input[required],textarea[required]", f).find(x => !x.checkValidity());
       if (bad) { $("#err").textContent = "Please check: " + (bad.placeholder || bad.name); bad.focus(); return; }
       const d = Object.fromEntries(new FormData(f));
-      const order = { id: "SJ" + Date.now().toString().slice(-7), ...d, items: Cart.items(), total: Cart.subtotal(), at: new Date().toISOString() };
-      store.set("saanjh_orders", [order, ...store.get("saanjh_orders", [])]);
+      const order = { id: "KB" + Date.now().toString().slice(-7), ...d, items: Cart.items(), total: Cart.subtotal(), at: new Date().toISOString() };
+      store.set("lkb_orders", [order, ...store.get("lkb_orders", [])]);
       Cart.clear();
       $("#cart").innerHTML = `<div class="empty-cart done"><div class="tick">✓</div><h2>Thank you, ${esc(d.name.split(" ")[0])}!</h2>
         <p>Your order <strong>#${order.id}</strong> for <strong>${inr(order.total)}</strong> is confirmed.</p>
@@ -248,7 +248,7 @@ function pageConsult() {
     if (bad) { $("#c-err").textContent = "Please fill: " + (bad.dataset.label || bad.name); bad.focus(); return; }
     const d = Object.fromEntries(new FormData(f));
     const id = "BK" + Date.now().toString().slice(-6);
-    store.set("saanjh_bookings", [{ id, ...d }, ...store.get("saanjh_bookings", [])]);
+    store.set("lkb_bookings", [{ id, ...d }, ...store.get("lkb_bookings", [])]);
     $("#consult-box").innerHTML = `<div class="empty-cart done"><div class="tick">✓</div><h2>You're booked, ${esc(d.name.split(" ")[0])}!</h2>
       <p>Booking <strong>#${id}</strong> — ${d.mode === "video" ? "Video call" : "Studio visit, " + BRAND.city} on <strong>${new Date(d.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</strong> at <strong>${d.slot}</strong>.</p>
       <p>A confirmation will be sent to ${esc(d.email)}.</p><a class="btn" href="stylist.html">Meanwhile, try the AI Stylist</a></div>`;
