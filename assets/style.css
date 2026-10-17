@@ -230,3 +230,21 @@ dt{color:var(--muted)}dd{margin:0}
 .logo{font-size:1.65rem;letter-spacing:.02em}
 .logo small.top{margin:0 0 3px;font-size:.62rem;letter-spacing:.5em;color:var(--gold)}
 @media (max-width:560px){.logo{font-size:1.3rem}.logo small{font-size:.5rem;letter-spacing:.25em}}
+
+/* product gallery thumbnails */
+.thumbs{display:flex;gap:8px;margin-top:10px}
+.thumbs button{width:72px;padding:0;border:2px solid transparent;background:none;cursor:pointer}
+.thumbs button.on{border-color:var(--maroon)}
+.thumbs img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.pd-img #pd-main img{width:100%;aspect-ratio:3/4;object-fit:cover}
+
+/* shop page: keep side gutters; compact filters on phones */
+.shop{padding-left:20px;padding-right:20px}
+@media (max-width:900px){
+  .filters{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;align-items:start}
+  .filters h4{margin:10px 0 6px;font-size:1rem}
+  .filters h4:nth-of-type(1),#f-cat{grid-column:1/-1}
+  #f-cat{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+  #f-cat button{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;padding:6px 14px;background:#fff;font-size:.88rem}
+  #f-cat button.on{background:var(--maroon);color:#fff;border-color:var(--maroon)}
+}

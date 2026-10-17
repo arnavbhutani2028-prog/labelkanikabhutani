@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
   const { prefs = {}, history = [], catalog = [] } = body || {};
   if (!Array.isArray(catalog) || !catalog.length) return res.status(400).json({ error: "catalog required" });
 
-  const items = catalog.slice(0, 60).map(p =>
+  const items = catalog.slice(0, 120).map(p =>
     `${p.id} | ${p.name} | ${p.category} | ₹${p.price} | colour: ${p.family} | occasions: ${(p.events || []).join("/")} | ${p.fabric} | style: ${p.style}`
   ).join("\n");
 

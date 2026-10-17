@@ -122,9 +122,9 @@ function renderChrome() {
 
 // ===== Pages =====
 function pageHome() {
-  $("#featured").innerHTML = ["G01", "A01", "G03", "G06"].map(id => card(byId(id))).join("");
-  $("#hero-art").innerHTML = media(byId("G01"));
-  $$(".cat-tile[data-img]").forEach(t => { const p = byId(t.dataset.img); if (p?.img) t.style.setProperty("--g", `linear-gradient(180deg,transparent 45%,rgba(30,10,14,.75)), url("${p.img}") center/cover`); });
+  $("#featured").innerHTML = ["N22", "N01", "N24", "N44"].map(id => card(byId(id))).join("");
+  $("#hero-art").innerHTML = media(byId("N22"));
+  $$(".cat-tile[data-img]").forEach(t => { const p = byId(t.dataset.img); if (p?.img) t.style.setProperty("--g", `linear-gradient(180deg,transparent 45%,rgba(30,10,14,.75)), url("${/^https?:/.test(p.img) ? p.img : new URL(p.img, location.href).href}") center/cover`); });
 }
 
 function pageShop() {
@@ -161,19 +161,20 @@ function pageProduct() {
   document.title = `${p.name} · ${BRAND.name}`;
   const sizes = p.category === "Jewellery" ? ["One size"] : SIZES;
   $("#product").innerHTML = `
-    <div class="pd-img">${media(p)}</div>
+    <div class="pd-img"><div id="pd-main">${media(p)}</div>${(p.imgs||[]).length > 1 ? `<div class="thumbs">${p.imgs.map((u, i) => `<button class="${i ? "" : "on"}" data-u="${u}" aria-label="View photo ${i + 1}"><img src="${u}" alt=""></button>`).join("")}</div>` : ""}</div>
     <div class="pd-info">
       <a href="shop.html?cat=${encodeURIComponent(p.category)}" class="crumb">← ${CAT_LABEL[p.category]}</a>
       <h1>${esc(p.name)}</h1>
       <p class="pd-price">${inr(p.price)} <span>incl. all taxes</span></p>
       <p>${esc(p.desc)}</p>
-      <dl><dt>Fabric</dt><dd>${esc(p.fabric)}</dd><dt>Perfect for</dt><dd>${p.events.map(cap).join(", ")}</dd><dt>Delivery</dt><dd>Ships in 3–5 weeks (made to order)</dd></dl>
+      <dl>${p.colour ? `<dt>Colour</dt><dd>${esc(p.colour)}</dd>` : ""}<dt>Fabric</dt><dd>${esc(p.fabric)}</dd>${p.pieces ? `<dt>The set</dt><dd>${esc(p.pieces)}</dd>` : ""}<dt>Perfect for</dt><dd>${p.events.map(cap).join(", ")}</dd><dt>Delivery</dt><dd>Ships in 3–5 weeks (made to order)</dd></dl>
       <label class="lbl">Size</label>
       <div class="sizes">${sizes.map((s, i) => `<button class="${i === (sizes.length > 1 ? 2 : 0) ? "on" : ""}" data-s="${s}">${s}</button>`).join("")}</div>
       <div class="qty-row"><label class="lbl" for="qty">Qty</label><input id="qty" type="number" min="1" max="5" value="1"></div>
       <div class="pd-actions"><button class="btn" id="add">Add to bag</button><button class="btn ghost" id="buy">Buy now</button></div>
       <p class="note">Not sure about the size or colour? <a href="stylist.html">Ask our AI Stylist</a> or <a href="consult.html">book a free video consultation</a>.</p>
     </div>`;
+  $$(".thumbs button").forEach(b => b.onclick = () => { $("#pd-main").innerHTML = `<img src="${b.dataset.u}" alt="${esc(p.name)}">`; $$(".thumbs button").forEach(x => x.classList.toggle("on", x === b)); });
   let size = $(".sizes .on").dataset.s;
   $(".sizes").onclick = e => { if (e.target.dataset.s) { size = e.target.dataset.s; $$(".sizes button").forEach(b => b.classList.toggle("on", b === e.target)); } };
   const add = () => { const q = Math.max(1, Math.min(5, +$("#qty").value || 1)); Cart.add(p.id, size, q); };
