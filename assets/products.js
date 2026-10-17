@@ -1,6 +1,8 @@
 // ===== Store config =====
 const BRAND = {
-  name: "Saanjh",
+  name: "Label Kanika Bhutani",
+  logo: "Kanika Bhutani",
+  logoTop: "Label",
   tagline: "Festive & Bridal Couture",
   city: "New Delhi"
 };

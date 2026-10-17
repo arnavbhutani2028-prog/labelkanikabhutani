@@ -1,9 +1,9 @@
-# Saanjh — Bridal Couture (D2C)
+# Label Kanika Bhutani — Festive & Bridal Couture (D2C)
 
-A direct-to-consumer bridal wear store: lehengas, sarees, gowns and bridal jewellery, sold straight from the atelier to the bride, with an **AI Bridal Stylist**.
+A direct-to-consumer festive and bridal wear label: ghararas, anarkalis, kurta sets, co-ords and jewellery, sold straight from the atelier to the bride, with an **AI Bridal Stylist**.
 
 ## Features
-- **Catalogue** of 17 products with filters (category, occasion, colour, budget) and sorting
+- **Catalogue** of 18 products with filters (category, occasion, colour, budget) and sorting
 - **Product pages** with size selection, quantity, add to bag / buy now, related items
 - **Cart & checkout** with validation (Indian mobile + PIN code), order confirmation and order ID (demo payment)
 - **AI Bridal Stylist** — recommends outfits from the catalogue based on function, budget, colours, vibe and body type, and answers follow-up questions. Uses Google Gemini via a serverless function (`/api/stylist`), with a built-in scoring engine as fallback so it always works.

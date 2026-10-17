@@ -225,3 +225,8 @@ dt{color:var(--muted)}dd{margin:0}
 
 #hero-art img{width:100%;aspect-ratio:3/4;object-fit:cover}
 .cat-tile::before{background:var(--g)}
+
+/* Label Kanika Bhutani logo */
+.logo{font-size:1.65rem;letter-spacing:.02em}
+.logo small.top{margin:0 0 3px;font-size:.62rem;letter-spacing:.5em;color:var(--gold)}
+@media (max-width:560px){.logo{font-size:1.3rem}.logo small{font-size:.5rem;letter-spacing:.25em}}

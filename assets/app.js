@@ -106,13 +106,13 @@ function renderChrome() {
   <div class="announce">Free shipping across India · Complimentary alterations · Virtual trials available</div>
   <header class="site-header"><div class="wrap nav">
     <button class="menu-btn" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
-    <a href="index.html" class="logo">${BRAND.name}<small>${BRAND.tagline}</small></a>
+    <a href="index.html" class="logo"><small class="top">${BRAND.logoTop}</small>${BRAND.logo}<small>${BRAND.tagline}</small></a>
     <nav class="links">${link("shop.html", "Shop")}${link("stylist.html", "AI Stylist ✦")}${link("consult.html", "Book Consultation")}</nav>
     <a href="cart.html" class="cart-link" aria-label="Cart">Bag <span id="cart-count" hidden>0</span></a>
   </div></header>`);
   document.body.insertAdjacentHTML("beforeend", `
   <footer class="site-footer"><div class="wrap foot">
-    <div><div class="logo light">${BRAND.name}<small>${BRAND.tagline}</small></div><p>Handcrafted festive and bridal wear, made-to-measure and shipped directly from our ${BRAND.city} atelier to you.</p></div>
+    <div><div class="logo light"><small class="top">${BRAND.logoTop}</small>${BRAND.logo}<small>${BRAND.tagline}</small></div><p>Handcrafted festive and bridal wear, made-to-measure and shipped directly from our ${BRAND.city} atelier to you.</p></div>
     <div><h4>Shop</h4>${CATEGORIES.map(c => `<a href="shop.html?cat=${encodeURIComponent(c)}">${CAT_LABEL[c]}</a>`).join("")}</div>
     <div><h4>Help</h4><a href="stylist.html">AI Stylist</a><a href="consult.html">Book a consultation</a><a href="cart.html">Your bag</a></div>
   </div><p class="copy">© ${new Date().getFullYear()} ${BRAND.name}. All rights reserved.</p></footer>`);
