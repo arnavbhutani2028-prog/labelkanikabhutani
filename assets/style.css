@@ -248,3 +248,20 @@ dt{color:var(--muted)}dd{margin:0}
   #f-cat button{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;padding:6px 14px;background:#fff;font-size:.88rem}
   #f-cat button.on{background:var(--maroon);color:#fff;border-color:var(--maroon)}
 }
+
+/* photo placeholder (until new photos are uploaded) */
+.ph{aspect-ratio:3/4;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  background:linear-gradient(180deg,#f7f0e6,#ecdfcb);color:var(--maroon)}
+.ph-mono{font-family:var(--serif);font-size:2.4rem;font-weight:600;letter-spacing:.08em;border:1px solid var(--gold);border-radius:50%;width:84px;height:84px;display:grid;place-items:center}
+.ph-txt{font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+.ci-img .ph-txt,.pick .ph-txt{display:none}
+.ci-img .ph-mono,.pick .ph-mono{width:48px;height:48px;font-size:1.3rem}
+
+/* "launching soon" state */
+.soon{grid-column:1/-1;text-align:center;padding:56px 20px;background:#fff;border:1px solid var(--line)}
+.soon p{color:var(--muted);max-width:460px;margin:0 auto 20px}
+#featured.is-empty{display:block}
+.hero-ph{max-width:100%}
+.hero-ph .ph-txt{text-align:center;padding:0 12px}
+.shop:has(.filters[hidden]){grid-template-columns:1fr}
+[hidden]{display:none !important}

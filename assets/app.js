@@ -13,7 +13,7 @@ const store = {
 
 // ===== Cart =====
 const Cart = {
-  items() { return store.get("lkb_cart", []); },
+  items() { return store.get("lkb_cart", []).filter(i => byId(i.id)); },
   save(items) { store.set("lkb_cart", items); updateCartBadge(); },
   add(id, size, qty = 1) {
     const items = this.items();
@@ -89,7 +89,7 @@ function art(p) {
 
 // Use a real photo when a product has one (p.img), otherwise the drawn illustration
 function media(p) {
-  return p.img ? `<img src="${p.img}" alt="${esc(p.name)}" loading="lazy">` : art(p);
+  return p.img ? `<img src="${p.img}" alt="${esc(p.name)}" loading="lazy">` : `<div class="ph" role="img" aria-label="${esc(p.name)} — photo coming soon"><span class="ph-mono">KB</span><span class="ph-txt">Photo coming soon</span></div>`;
 }
 
 function card(p) {
@@ -122,8 +122,11 @@ function renderChrome() {
 
 // ===== Pages =====
 function pageHome() {
-  $("#featured").innerHTML = ["N29", "N01", "N14", "N32"].map(id => card(byId(id))).join("");
-  $("#hero-art").innerHTML = media(byId("N29"));
+  const feat = ["N29", "N01", "N14", "N32"].map(byId).filter(Boolean);
+  $("#featured").innerHTML = feat.length ? feat.map(card).join("") : `<div class="soon"><span class="eyebrow">New collection</span><h2>Launching soon</h2><p>We're photographing our new festive edit. Book a free consultation to see pieces first.</p><a class="btn" href="consult.html">Book a consultation</a></div>`;
+  if (!feat.length) { $("#featured").classList.add("is-empty"); const v = $("#view-all"); if (v) v.hidden = true; }
+  $("#hero-art").innerHTML = feat.length ? media(feat[0]) : `<div class="ph hero-ph"><span class="ph-mono">KB</span><span class="ph-txt">New collection · coming soon</span></div>`;
+  if (!PRODUCTS.length) { const c = $("#cats-section"); if (c) c.hidden = true; }
   $$(".cat-tile[data-img]").forEach(t => { const p = byId(t.dataset.img); if (p?.img) t.style.setProperty("--g", `linear-gradient(180deg,transparent 45%,rgba(30,10,14,.75)), url("${/^https?:/.test(p.img) ? p.img : new URL(p.img, location.href).href}") center/cover`); });
 }
 
@@ -141,6 +144,7 @@ function pageShop() {
       && (!state.event || p.events.includes(state.event)) && p.price <= state.max);
     if (state.sort === "low") list.sort((a, b) => a.price - b.price);
     if (state.sort === "high") list.sort((a, b) => b.price - a.price);
+    if (!PRODUCTS.length) { $("#grid").innerHTML = `<div class="soon"><span class="eyebrow">New collection</span><h2>Launching soon</h2><p>We're photographing our new festive edit. Book a free consultation to see pieces first.</p><a class="btn" href="consult.html">Book a consultation</a></div>`; $("#count").textContent = ""; $(".filters").hidden = true; $(".toolbar").hidden = true; return; }
     $("#grid").innerHTML = list.length ? list.map(card).join("") : `<p class="empty">No pieces match these filters. <button class="link" id="reset">Clear filters</button></p>`;
     $("#count").textContent = `${list.length} piece${list.length === 1 ? "" : "s"}`;
     $$("#f-cat button").forEach(b => b.classList.toggle("on", b.dataset.cat === state.cat));
@@ -158,6 +162,7 @@ function pageShop() {
 
 function pageProduct() {
   const p = byId(new URLSearchParams(location.search).get("id")) || PRODUCTS[0];
+  if (!p) { $("#product").innerHTML = `<div class="soon"><span class="eyebrow">New collection</span><h2>Launching soon</h2><p>We're photographing our new festive edit. Book a free consultation to see pieces first.</p><a class="btn" href="consult.html">Book a consultation</a></div>`; $("#related").closest("section").hidden = true; return; }
   document.title = `${p.name} · ${BRAND.name}`;
   const sizes = p.category === "Jewellery" ? ["One size"] : SIZES;
   $("#product").innerHTML = `
@@ -185,6 +190,7 @@ function pageProduct() {
 }
 
 function pageCart() {
+  Cart.save(Cart.items().filter(i => byId(i.id)));
   function draw() {
     const items = Cart.items();
     if (!items.length) {
@@ -323,6 +329,7 @@ function pageStylist() {
   }
   f.onsubmit = async e => {
     e.preventDefault();
+    if (!PRODUCTS.length) { $("#stylist-out").hidden = false; $("#out-empty").hidden = true; $("#chat").innerHTML = `<div class="msg ai"><p>Our new collection is being photographed right now, so I can't recommend pieces just yet. Check back soon, or <a href="consult.html">book a free consultation</a> with our stylist.</p></div>`; return; }
     const d = new FormData(f);
     prefs = { event: d.get("event"), budget: +d.get("budget") || 0, colors: d.getAll("colors"), body: d.get("body"), vibe: d.get("vibe"), notes: d.get("notes").trim() };
     $("#stylist-out").hidden = false; $("#out-empty").hidden = true; $("#chat").innerHTML = ""; history.length = 0;
