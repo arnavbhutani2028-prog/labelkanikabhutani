@@ -10,7 +10,7 @@ const BRAND = {
  phone: "",
  instagram: "",
  // Microsoft Clarity project ID (clarity.microsoft.com → Settings → Overview). Leave empty to disable.
- clarityId: ""
+ clarityId: "z9h4vlt51s"
 };
 
 // Shopify CDN photo, resized for fast loading
