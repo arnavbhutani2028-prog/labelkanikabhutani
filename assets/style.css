@@ -265,3 +265,13 @@ dt{color:var(--muted)}dd{margin:0}
 .hero-ph .ph-txt{text-align:center;padding:0 12px}
 .shop:has(.filters[hidden]){grid-template-columns:1fr}
 [hidden]{display:none !important}
+
+/* policy pages */
+.policy{max-width:760px;margin:36px auto 70px;background:#fff;border:1px solid var(--line);padding:32px 36px}
+.policy h2{font-size:1.45rem;margin:26px 0 8px}
+.policy h2:first-child{margin-top:0}
+.policy p{color:#4a3a3c}
+.policy .updated{color:var(--muted);font-size:.85rem;margin-top:28px}
+.pay-note{margin:0;font-size:.9rem;color:var(--muted)}
+.checkout small a{color:var(--maroon)}
+@media (max-width:560px){.policy{padding:22px 18px;margin:20px 0 50px}}

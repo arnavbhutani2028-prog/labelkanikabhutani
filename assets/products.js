@@ -4,7 +4,13 @@ const BRAND = {
  logo: "Kanika Bhutani",
  logoTop: "Label",
  tagline: "Festive & Bridal Couture",
- city: "New Delhi"
+ city: "New Delhi",
+ // Contact details shown on the Contact page and footer — fill these in.
+ email: "",
+ phone: "",
+ instagram: "",
+ // Microsoft Clarity project ID (clarity.microsoft.com → Settings → Overview). Leave empty to disable.
+ clarityId: ""
 };
 
 // Shopify CDN photo, resized for fast loading

@@ -114,9 +114,8 @@ function renderChrome() {
   <footer class="site-footer"><div class="wrap foot">
     <div><div class="logo light"><small class="top">${BRAND.logoTop}</small>${BRAND.logo}<small>${BRAND.tagline}</small></div><p>Handcrafted festive and bridal wear, made-to-measure and shipped directly from our ${BRAND.city} atelier to you.</p></div>
     <div><h4>Shop</h4>${CATEGORIES.map(c => `<a href="shop.html?cat=${encodeURIComponent(c)}">${CAT_LABEL[c]}</a>`).join("")}</div>
-    <div><h4>Help</h4><a href="stylist.html">AI Stylist</a><a href="consult.html">Book a consultation</a><a href="cart.html">Your bag</a></div>
+    <div><h4>Help</h4><a href="stylist.html">AI Stylist</a><a href="consult.html">Book a consultation</a><a href="contact.html">Contact us</a><a href="shipping.html">Shipping</a><a href="refund.html">Returns &amp; refunds</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
   </div><p class="copy">© ${new Date().getFullYear()} ${BRAND.name}. All rights reserved.</p></footer>`);
-  document.title = document.title.replace("{BRAND}", BRAND.name);
   updateCartBadge();
 }
 
@@ -217,30 +216,65 @@ function pageCart() {
         <div class="two"><input name="city" placeholder="City" required><input name="pin" placeholder="PIN code" required pattern="[1-9][0-9]{5}" inputmode="numeric"></div>
         <input name="date" type="date" aria-label="Wedding date"><small>Wedding date (optional) — we'll make sure it arrives in time.</small>
         <label class="lbl">Payment</label>
-        <div class="pay">
-          <label><input type="radio" name="pay" value="UPI" checked> UPI / Card (demo)</label>
-          <label><input type="radio" name="pay" value="COD"> Pay on delivery</label>
-          <label><input type="radio" name="pay" value="Advance"> 30% advance, rest before dispatch</label>
-        </div>
+        <p class="pay-note">Pay securely with UPI, cards, netbanking or wallets via Razorpay.</p>
         <p class="err" id="err"></p>
-        <button class="btn full" type="submit">Place order · ${inr(sub)}</button>
-        <small>This is a student project — no real payment is taken.</small>
+        <button class="btn full" type="submit" id="pay-btn">Pay ${inr(sub)}</button>
+        <small>By placing this order you agree to our <a href="terms.html">Terms</a>, <a href="refund.html">Returns &amp; Refunds</a> and <a href="shipping.html">Shipping</a> policies.</small>
       </form>`;
     $(".cart-items").onclick = e => { const b = e.target.closest("button"); if (!b) return; const i = +b.dataset.i; Cart.setQty(i, Cart.items()[i].qty + +b.dataset.d); draw(); };
-    $("#checkout").onsubmit = e => {
+    $("#checkout").onsubmit = async e => {
       e.preventDefault();
       const f = e.target, bad = $$("input[required],textarea[required]", f).find(x => !x.checkValidity());
       if (bad) { $("#err").textContent = "Please check: " + (bad.placeholder || bad.name); bad.focus(); return; }
       const d = Object.fromEntries(new FormData(f));
-      const order = { id: "KB" + Date.now().toString().slice(-7), ...d, items: Cart.items(), total: Cart.subtotal(), at: new Date().toISOString() };
-      store.set("lkb_orders", [order, ...store.get("lkb_orders", [])]);
-      Cart.clear();
-      $("#cart").innerHTML = `<div class="empty-cart done"><div class="tick">✓</div><h2>Thank you, ${esc(d.name.split(" ")[0])}!</h2>
-        <p>Your order <strong>#${order.id}</strong> for <strong>${inr(order.total)}</strong> is confirmed.</p>
-        <p>Our stylist will call you on ${esc(d.phone)} within 24 hours to confirm measurements.</p>
-        <a class="btn" href="shop.html">Continue shopping</a></div>`;
-      scrollTo(0, 0);
+      const btn = $("#pay-btn"); btn.disabled = true; btn.textContent = "Starting secure payment…"; $("#err").textContent = "";
+      const reset = msg => { btn.disabled = false; btn.textContent = "Pay " + inr(Cart.subtotal()); if (msg) $("#err").textContent = msg; };
+      let order;
+      try {
+        const r = await fetch("/api/create-order", { method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items: Cart.items(), customer: d }) });
+        order = await r.json().catch(() => ({}));
+        if (r.status === 503 && order.demo) return demoOrder(d);
+        if (!r.ok) return reset(order.error || "Could not start payment. Please try again.");
+      } catch { return reset("Network error. Please check your connection and try again."); }
+      try { await loadRazorpay(); } catch { return reset("Could not load the payment window. Please try again."); }
+      const rzp = new window.Razorpay({
+        key: order.keyId, order_id: order.orderId, amount: order.amount, currency: "INR",
+        name: BRAND.name, description: "Order " + order.receipt,
+        prefill: { name: d.name, email: d.email, contact: d.phone }, theme: { color: "#7a1426" },
+        modal: { ondismiss: () => reset("Payment cancelled. Your bag is saved.") },
+        handler: async resp => {
+          btn.textContent = "Confirming payment…";
+          try {
+            const v = await fetch("/api/verify-payment", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(resp) });
+            const out = await v.json().catch(() => ({}));
+            if (!v.ok) return reset(out.error || "We couldn't confirm your payment. If money was deducted, we'll contact you.");
+            Cart.clear(); done(d, out.receipt || order.receipt, out.amount || order.amount / 100, true);
+          } catch { reset("We couldn't confirm your payment. If money was deducted, we'll contact you."); }
+        }
+      });
+      rzp.on("payment.failed", r => reset((r && r.error && r.error.description) || "Payment failed. Please try again."));
+      rzp.open();
     };
+  }
+  function done(d, receipt, total, paid) {
+    $("#cart").innerHTML = `<div class="empty-cart done"><div class="tick">✓</div><h2>Thank you, ${esc(d.name.split(" ")[0])}!</h2>
+      <p>Your order <strong>#${esc(receipt)}</strong> for <strong>${inr(total)}</strong> is ${paid ? "paid and confirmed" : "placed (demo — no payment taken)"}.</p>
+      <p>${paid ? "A confirmation has been sent to " + esc(d.email) + ". " : ""}Our stylist will call you on ${esc(d.phone)} within 24 hours to confirm measurements.</p>
+      <a class="btn" href="shop.html">Continue shopping</a></div>`;
+    scrollTo(0, 0);
+  }
+  // Used only while online payments are not configured on the server.
+  function demoOrder(d) {
+    const id = "KB-DEMO-" + Date.now().toString(36).toUpperCase(), total = Cart.subtotal();
+    Cart.clear(); done(d, id, total, false);
+  }
+  function loadRazorpay() {
+    if (window.Razorpay) return Promise.resolve();
+    return new Promise((ok, fail) => {
+      const sc = document.createElement("script"); sc.src = "https://checkout.razorpay.com/v1/checkout.js";
+      sc.onload = ok; sc.onerror = fail; document.head.appendChild(sc);
+    });
   }
   draw();
 }
@@ -293,7 +327,7 @@ function localStylist(prefs) {
 async function askStylist(prefs, history) {
   try {
     const ctl = new AbortController(); setTimeout(() => ctl.abort(), 20000);
-    const r = await fetch("/api/stylist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ prefs, history, catalog: PRODUCTS.map(({ desc, color, accent, ...p }) => p) }), signal: ctl.signal });
+    const r = await fetch("/api/stylist", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ prefs, history: history.slice(-6).map(m => ({ role: m.role, text: String(m.text).slice(0, 500) })) }), signal: ctl.signal });
     if (!r.ok) throw new Error("api " + r.status);
     const j = await r.json();
     if (!j.message) throw new Error("bad response");
@@ -342,8 +376,29 @@ function pageStylist() {
   };
 }
 
+function loadAnalytics() {
+  if (!BRAND.clarityId || !/^[a-z0-9]{6,20}$/i.test(BRAND.clarityId)) return;
+  (function (c, l, a, r, i, t, y) {
+    c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+    t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+    y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+  })(window, document, "clarity", "script", BRAND.clarityId);
+}
+
+function pagePolicy() {
+  const box = $("#contact-details"); if (!box) return;
+  const rows = [
+    BRAND.email && `<p><strong>Email:</strong> <a href="mailto:${esc(BRAND.email)}">${esc(BRAND.email)}</a></p>`,
+    BRAND.phone && `<p><strong>Phone / WhatsApp:</strong> <a href="tel:${esc(BRAND.phone.replace(/\s/g, ""))}">${esc(BRAND.phone)}</a></p>`,
+    BRAND.instagram && `<p><strong>Instagram:</strong> <a href="https://instagram.com/${esc(BRAND.instagram.replace(/^@/, ""))}" rel="noopener">@${esc(BRAND.instagram.replace(/^@/, ""))}</a></p>`,
+    `<p><strong>Studio:</strong> ${esc(BRAND.city)}, India (visits by appointment)</p>`
+  ].filter(Boolean).join("");
+  box.innerHTML = `<h2>Get in touch</h2>${rows}<p>For orders, measurements, alterations or returns, reach us through any of the above and include your order number if you have one.</p>`;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  loadAnalytics();
   renderChrome();
   const page = document.body.dataset.page;
-  ({ home: pageHome, shop: pageShop, product: pageProduct, cart: pageCart, consult: pageConsult, stylist: pageStylist }[page] || (() => {}))();
+  ({ home: pageHome, shop: pageShop, product: pageProduct, cart: pageCart, consult: pageConsult, stylist: pageStylist, policy: pagePolicy }[page] || (() => {}))();
 });
