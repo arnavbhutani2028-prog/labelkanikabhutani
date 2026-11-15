@@ -120,8 +120,11 @@ function renderChrome() {
   <footer class="site-footer"><div class="wrap foot">
     <div><div class="logo light"><small class="top">${BRAND.logoTop}</small>${BRAND.logo}<small>${BRAND.tagline}</small></div><p class="foot-story">${esc(BRAND.story)}</p></div>
     <div class="foot-wa">
-      <a class="fc-big" href="${contactHref()}" ${BRAND.whatsapp ? 'target="_blank" rel="noopener"' : ""}>${BRAND.whatsapp ? "Connect with us on WhatsApp" : "Contact us"}</a>
-      <p>Questions about an outfit, sizing or delivery? Message us and we will reply personally.</p>
+      <a class="wa-card" href="${contactHref()}" ${BRAND.whatsapp ? 'target="_blank" rel="noopener"' : ""}>
+        <span class="wa-ic"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><path fill="#fff" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2l-1 1.2c-.2.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.8 5.1 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.2-.6-.4z"/></svg></span>
+        <span class="wa-txt"><b>Connect with us on WhatsApp</b><small>Questions about an outfit, sizing or delivery? Tap to chat with us.</small></span>
+        <span class="wa-go">Chat now</span>
+      </a>
     </div>
     <div><h4>Shop</h4>${CATEGORIES.map(c => `<a href="shop.html?cat=${encodeURIComponent(c)}">${CAT_LABEL[c]}</a>`).join("")}</div>
     <div><h4>Help</h4><a href="stylist.html">AI Stylist</a><a href="consult.html">Book a consultation</a><a href="${contactHref()}" ${BRAND.whatsapp ? 'target="_blank" rel="noopener"' : ""}>Contact us</a><a href="shipping.html">Shipping</a><a href="refund.html">Returns &amp; refunds</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>

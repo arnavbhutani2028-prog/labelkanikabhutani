@@ -475,3 +475,26 @@ select:focus,input:focus,textarea:focus{outline:1px solid var(--ink);border-colo
   .foot{grid-template-columns:1fr 1fr;grid-template-areas:"brand brand" "wa wa" "shop help"}
 }
 @media (max-width:560px){.fc-big{font-size:2.1rem}}
+
+/* WhatsApp call-to-action card */
+.foot>.foot-wa{border-bottom:0;padding-bottom:8px}
+.wa-card{display:flex;align-items:center;gap:22px;padding:24px 26px;background:#fff;border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:border-color .25s,box-shadow .25s}
+.foot .foot-wa a.wa-card{margin:0;color:var(--ink)}
+.wa-card:hover{border-color:#25d366;box-shadow:0 14px 34px -20px rgba(18,140,74,.55)}
+.wa-ic{flex:none;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center}
+.wa-txt{flex:1;display:flex;flex-direction:column;gap:6px}
+.wa-txt b{font-family:var(--serif);font-weight:400;font-size:clamp(1.45rem,3vw,2.1rem);line-height:1.15}
+.wa-txt small{color:var(--taupe);font-size:.92rem}
+.wa-go{flex:none;background:#25d366;color:#fff;font:700 .72rem var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:15px 24px}
+.wa-card:hover .wa-go{background:#1ebe5b}
+@media (max-width:560px){
+  .wa-card{flex-wrap:wrap;gap:16px;padding:20px}
+  .wa-ic{width:48px;height:48px}
+  .wa-txt{flex-basis:calc(100% - 64px)}
+  .wa-go{width:100%;text-align:center}
+}
+.foot .foot-wa a.wa-card{display:flex}
+.foot .wa-card span{margin:0}
+.foot .wa-card .wa-ic{display:grid}
+.foot .wa-card .wa-txt{display:flex;color:var(--ink)}
+.foot .wa-card .wa-go{display:block;color:#fff}
