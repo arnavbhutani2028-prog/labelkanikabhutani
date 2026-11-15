@@ -121,12 +121,11 @@ function renderChrome() {
 
 // ===== Pages =====
 function pageHome() {
-  const feat = ["K06", "K11", "K21", "K37", "K01", "K15", "K31", "K40"].map(byId).filter(Boolean);
+  const feat = ["K06", "K12", "K21", "K44", "K01", "K15", "K31", "K47"].map(byId).filter(Boolean);
   $("#featured").innerHTML = feat.length ? feat.map(card).join("") : `<div class="soon"><span class="eyebrow">New collection</span><h2>Launching soon</h2><p>We're photographing our new festive edit. Book a free consultation to see pieces first.</p><a class="btn" href="consult.html">Book a consultation</a></div>`;
   if (!feat.length) { $("#featured").classList.add("is-empty"); const v = $("#view-all"); if (v) v.hidden = true; }
   $("#hero-art").innerHTML = feat.length ? media(feat[0]) : `<div class="ph hero-ph"><span class="ph-mono">${esc(BRAND.logo)}</span><span class="ph-txt">New collection · coming soon</span></div>`;
   if (!PRODUCTS.length) { const c = $("#cats-section"); if (c) c.hidden = true; }
-  $$(".circle[data-cat]").forEach(t => { const n = PRODUCTS.filter(p => p.category === t.dataset.cat).length; const c = t.querySelector("em"); if (c) c.textContent = n ? `${n} styles` : "Coming soon"; });
 }
 
 function pageShop() {
