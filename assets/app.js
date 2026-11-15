@@ -121,12 +121,12 @@ function renderChrome() {
 
 // ===== Pages =====
 function pageHome() {
-  const feat = ["N29", "N01", "N14", "N32"].map(byId).filter(Boolean);
+  const feat = ["K06", "K11", "K21", "K37", "K01", "K15", "K31", "K40"].map(byId).filter(Boolean);
   $("#featured").innerHTML = feat.length ? feat.map(card).join("") : `<div class="soon"><span class="eyebrow">New collection</span><h2>Launching soon</h2><p>We're photographing our new festive edit. Book a free consultation to see pieces first.</p><a class="btn" href="consult.html">Book a consultation</a></div>`;
   if (!feat.length) { $("#featured").classList.add("is-empty"); const v = $("#view-all"); if (v) v.hidden = true; }
   $("#hero-art").innerHTML = feat.length ? media(feat[0]) : `<div class="ph hero-ph"><span class="ph-mono">${esc(BRAND.logo)}</span><span class="ph-txt">New collection · coming soon</span></div>`;
   if (!PRODUCTS.length) { const c = $("#cats-section"); if (c) c.hidden = true; }
-  $$(".cat-tile[data-img]").forEach(t => { const p = byId(t.dataset.img); if (p?.img) t.style.setProperty("--g", `linear-gradient(180deg,transparent 45%,rgba(30,10,14,.75)), url("${/^https?:/.test(p.img) ? p.img : new URL(p.img, location.href).href}") center/cover`); });
+  $$(".circle[data-cat]").forEach(t => { const n = PRODUCTS.filter(p => p.category === t.dataset.cat).length; const c = t.querySelector("em"); if (c) c.textContent = n ? `${n} styles` : "Coming soon"; });
 }
 
 function pageShop() {
@@ -307,8 +307,8 @@ function localStylist(prefs) {
     if (prefs.budget) s += p.price <= prefs.budget ? 3 - (prefs.budget - p.price) / prefs.budget : -6;
     if (prefs.vibe && p.style.includes(prefs.vibe)) s += 2;
     if (words && (words.includes(p.category.toLowerCase().split(" ")[0]) || words.includes(p.family))) s += 1.5;
-    if (prefs.body === "petite" && ["Gharara", "Kaftan Set"].includes(p.category)) s += .5;
-    if (prefs.body === "curvy" && ["Sharara", "Gharara"].includes(p.category)) s += .5;
+    if (prefs.body === "petite" && ["Sharara", "Anarkali"].includes(p.category)) s += .5;
+    if (prefs.body === "curvy" && ["Anarkali", "Lehenga"].includes(p.category)) s += .5;
     return { p, s };
   }).sort((a, b) => b.s - a.s);
   const picks = scored.filter(x => x.p.category !== "Jewellery").slice(0, 3);
@@ -317,8 +317,8 @@ function localStylist(prefs) {
   const ev = prefs.event ? cap(prefs.event) : "your function";
   return {
     message: `For ${ev}${prefs.budget ? ` within ${inr(prefs.budget)}` : ""}, I'd start with the ${picks[0].p.name} — ${picks[0].p.desc.split(".")[0].toLowerCase()}. ` +
-      `The ${picks[1]?.p.name || ""} is a great second option, and I've added ${acc ? "the " + acc.p.name : "an accessory"} to complete the look.` +
-      (prefs.body ? ` Tip for a ${prefs.body} frame: ${{ petite: "go for shorter kurtas, lighter fabrics and vertical embroidery to add height.", curvy: "a longer kurta with a flared gharara or sharara looks stunning.", tall: "long kurtas and wide gharara flares will look regal on you.", athletic: "a kaftan or flared sharara adds soft movement and shape." }[prefs.body] || ""}` : ""),
+      `The ${picks[1]?.p.name || ""} is a great second option, ${acc ? `and I've added the ${acc.p.name} to complete the look.` : `and the ${picks[2]?.p.name || "rest of the edit"} is worth a look too.`}` +
+      (prefs.body ? ` Tip for a ${prefs.body} frame: ${{ petite: "go for shorter kurtas, lighter fabrics and vertical embroidery to add height.", curvy: "a floor-length anarkali or a flared lehenga looks stunning.", tall: "long jackets, anarkalis and wide lehenga flares will look regal on you.", athletic: "a drape saree gown or a flared sharara adds soft movement and shape." }[prefs.body] || ""}` : ""),
     picks: picks.map(x => ({ id: x.p.id, why: `${cap(x.p.style)} · ${x.p.fabric}` })),
     source: "local"
   };

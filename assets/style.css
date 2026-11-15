@@ -281,3 +281,15 @@ dt{color:var(--muted)}dd{margin:0}
 .logo small.top{letter-spacing:.35em;text-transform:uppercase}
 .ph-mono{font-size:1.15rem;letter-spacing:.12em;width:96px;height:96px}
 .ci-img .ph-mono,.pick .ph-mono{font-size:.7rem;width:52px;height:52px}
+
+/* category circles (top of home) */
+.circles-band{background:var(--ivory);border-bottom:1px solid var(--line);padding:26px 0 22px}
+.circles-title{text-align:center;font-size:1.05rem;font-family:var(--sans);font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin:0 0 18px}
+.circles{display:flex;justify-content:center;gap:clamp(18px,5vw,64px);flex-wrap:wrap}
+.circle{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:var(--ink);width:clamp(120px,19vw,180px)}
+.circle .ring{display:block;width:100%;aspect-ratio:1;overflow:hidden;border-radius:50%;padding:4px;background:conic-gradient(var(--gold),var(--maroon),var(--gold-l),var(--gold));transition:transform .25s}
+.circle img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:50% 22%;border-radius:50%;border:3px solid var(--ivory)}
+.circle:hover .ring{transform:scale(1.05)}
+.circle b{font-family:var(--serif);font-size:1.35rem;font-weight:600;color:var(--maroon);margin-top:10px;line-height:1.1}
+.circle em{font-style:normal;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+@media(max-width:560px){.circles{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 22px;justify-items:center}.circle{width:min(150px,40vw)}}
