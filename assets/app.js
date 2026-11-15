@@ -125,6 +125,7 @@ function renderChrome() {
         <span class="wa-txt"><b>Connect with us on WhatsApp</b><small>Questions about an outfit, sizing or delivery? Tap to chat with us.</small></span>
         <span class="wa-go">Chat now</span>
       </a>
+      ${BRAND.email ? `<p class="foot-mail">Prefer email? Write to us at <a href="mailto:${esc(BRAND.email)}">${esc(BRAND.email)}</a></p>` : ""}
     </div>
     <div><h4>Shop</h4>${CATEGORIES.map(c => `<a href="shop.html?cat=${encodeURIComponent(c)}">${CAT_LABEL[c]}</a>`).join("")}</div>
     <div><h4>Help</h4><a href="stylist.html">AI Stylist</a><a href="consult.html">Book a consultation</a><a href="${contactHref()}" ${BRAND.whatsapp ? 'target="_blank" rel="noopener"' : ""}>Contact us</a><a href="shipping.html">Shipping</a><a href="refund.html">Returns &amp; refunds</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>

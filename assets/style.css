@@ -498,3 +498,5 @@ select:focus,input:focus,textarea:focus{outline:1px solid var(--ink);border-colo
 .foot .wa-card .wa-ic{display:grid}
 .foot .wa-card .wa-txt{display:flex;color:var(--ink)}
 .foot .wa-card .wa-go{display:block;color:#fff}
+.foot .foot-mail{margin:16px 0 0;color:var(--taupe);font-size:.92rem}
+.foot .foot-mail a{display:inline;color:var(--ink);text-decoration:underline;text-underline-offset:3px;margin:0}

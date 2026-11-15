@@ -7,7 +7,7 @@ const BRAND = {
  tagline: "Festive & Bridal Couture",
  city: "Gurgaon",
  // Contact details shown on the Contact page and footer — fill these in.
- email: "",
+ email: "houseofkadj@gmail.com",
  phone: "",
  whatsapp: "9810395974", // 10-digit WhatsApp number, e.g. "9876543210" — turns every "Contact us" link into a WhatsApp chat
  instagram: "",
