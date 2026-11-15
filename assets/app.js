@@ -303,9 +303,16 @@ function pageConsult() {
     const d = Object.fromEntries(new FormData(f));
     const id = "BK" + Date.now().toString().slice(-6);
     store.set("lkb_bookings", [{ id, ...d }, ...store.get("lkb_bookings", [])]);
-    $("#consult-box").innerHTML = `<div class="empty-cart done"><div class="tick">✓</div><h2>You're booked, ${esc(d.name.split(" ")[0])}!</h2>
-      <p>Booking <strong>#${id}</strong> — ${d.mode === "video" ? "Video call" : "Studio visit, " + BRAND.city} on <strong>${new Date(d.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</strong> at <strong>${d.slot}</strong>.</p>
-      <p>A confirmation will be sent to ${esc(d.email)}.</p><a class="btn" href="stylist.html">Meanwhile, try the AI Stylist</a></div>`;
+    const when = new Date(d.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+    const how = d.mode === "video" ? "Video call" : "Studio visit, " + BRAND.city;
+    const msg = [`Hi House of K.A.D.J! I'd like to book a consultation (#${id}).`, `Name: ${d.name}`, `Phone: ${d.phone}`, `Email: ${d.email}`,
+      `Type: ${how}`, `Date: ${when}, ${d.slot}`, d.wedding ? `Function date: ${d.wedding}` : "", d.notes ? `Looking for: ${d.notes}` : ""].filter(Boolean).join("\n");
+    const wa = waLink(msg);
+    if (wa) window.open(wa, "_blank", "noopener");
+    $("#consult-box").innerHTML = `<div class="empty-cart done"><div class="tick">✓</div><h2>Almost done, ${esc(d.name.split(" ")[0])}!</h2>
+      <p>${how} on <strong>${when}</strong> at <strong>${esc(d.slot)}</strong>.</p>
+      ${wa ? `<p>Your booking details are ready in WhatsApp. Press <strong>Send</strong> there and we will confirm your slot personally.</p><a class="btn" href="${wa}" target="_blank" rel="noopener">Open WhatsApp to confirm</a>`
+           : `<p>We have your request and will contact you on ${esc(d.phone)} to confirm.</p><a class="btn" href="stylist.html">Meanwhile, try the AI Stylist</a>`}</div>`;
   };
 }
 
