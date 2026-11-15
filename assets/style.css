@@ -293,3 +293,133 @@ dt{color:var(--muted)}dd{margin:0}
 .circle b{font-family:var(--serif);font-size:1.35rem;font-weight:600;color:var(--maroon);margin-top:10px;line-height:1.1}
 .circle em{font-style:normal;font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
 @media(max-width:560px){.circles{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 22px;justify-items:center}.circle{width:min(150px,40vw)}}
+
+/* =====================================================
+   Bridal theme: kumkum, sindoor and zari gold
+   Signature motif: the jharokha arch
+   ===================================================== */
+:root{
+  --kumkum:#4a0712;--kumkum-2:#3a050e;--sindoor:#8e1426;--zari:#c9a35b;--zari-l:#ead6a6;
+  --rose:#fff6f1;--blush:#f9e8e1;--ink:#26090f;--muted:#7a5b5f;--line:#ecd9cf;
+  --maroon:#8e1426;--maroon-d:#6d0f1d;--gold:#c9a35b;--gold-l:#ead6a6;--ivory:#fff6f1;--cream:#f9e8e1;
+  --serif:"Bodoni Moda",Didot,"Bodoni 72",Georgia,serif;--sans:"Mulish",system-ui,sans-serif;
+  --jaal:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%23c9a35b' stroke-width='.8' opacity='.22'%3E%3Cpath d='M28 4 L52 28 L28 52 L4 28Z'/%3E%3Ccircle cx='28' cy='28' r='3'/%3E%3Cpath d='M0 0 L4 4 M56 0 L52 4 M0 56 L4 52 M56 56 L52 52'/%3E%3C/g%3E%3C/svg%3E");
+}
+body{background:var(--rose);color:var(--ink);font-size:16.5px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.005em}
+:focus-visible{outline:2px solid var(--zari);outline-offset:3px}
+
+/* header: deep kumkum, gold wordmark */
+.announce{background:var(--kumkum-2);color:var(--zari-l);font-size:.82rem;letter-spacing:.04em;padding:8px 12px}
+.site-header{background:var(--kumkum);border-bottom:1px solid rgba(201,163,91,.45);backdrop-filter:none}
+.nav{height:84px}
+.logo,.logo.light{color:var(--zari-l);font-family:var(--serif);font-weight:700;font-size:1.9rem;letter-spacing:.06em}
+.logo small{color:var(--zari);font-family:var(--sans);letter-spacing:.32em;font-size:.58rem}
+.links a,.cart-link{color:#f3e4d9;font-size:.95rem;letter-spacing:.03em}
+.links a:hover,.links a.active{color:var(--zari-l)}
+.links a.active{border-bottom-color:var(--zari)}
+.cart-link{border-color:var(--zari);color:var(--zari-l)}
+#cart-count{background:var(--zari);color:var(--kumkum)}
+.menu-btn{color:var(--zari-l)}
+
+/* buttons */
+.btn{background:var(--sindoor);border-color:var(--sindoor);border-radius:0;font:600 .86rem var(--sans);letter-spacing:.08em;padding:15px 30px;box-shadow:inset 0 0 0 3px var(--sindoor),inset 0 0 0 4px rgba(234,214,166,.55)}
+.btn:hover{background:var(--maroon-d);border-color:var(--maroon-d)}
+.btn.gold{background:var(--zari);border-color:var(--zari);color:var(--kumkum);box-shadow:inset 0 0 0 3px var(--zari),inset 0 0 0 4px rgba(74,7,18,.35)}
+.btn.gold:hover{background:var(--zari-l);border-color:var(--zari-l)}
+.btn.line{background:transparent;border-color:rgba(234,214,166,.6);color:var(--zari-l);box-shadow:none}
+.btn.line:hover{background:rgba(234,214,166,.1)}
+.btn.ghost{background:transparent;color:var(--sindoor);box-shadow:none}
+.center{text-align:center;margin-top:44px}
+
+/* ornamental section titles: a small gold motif between two rules */
+.orn-title{display:flex;align-items:center;justify-content:center;gap:18px;text-align:center;font-size:clamp(1.8rem,3.6vw,2.7rem);color:var(--kumkum);margin:0 0 40px}
+.orn-title::before,.orn-title::after{content:"";flex:0 1 110px;height:10px;background:
+  linear-gradient(var(--zari),var(--zari)) center/100% 1px no-repeat,
+  radial-gradient(circle,var(--zari) 2.5px,transparent 3px) right center/10px 10px no-repeat}
+.orn-title::after{transform:scaleX(-1)}
+
+/* hero: dark kumkum with a gold jaal, three jharokha arches */
+.hero{background:var(--jaal),radial-gradient(ellipse at 70% 40%,#6a0d1d 0,var(--kumkum) 60%,var(--kumkum-2) 100%);color:#f6e7dc;overflow:hidden;padding:0}
+.hero .wrap.hero-grid{display:grid;grid-template-columns:.9fr 1.2fr;gap:48px;align-items:center;padding-top:72px;padding-bottom:84px}
+.hero-kicker{font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--zari);margin:0 0 14px}
+.hero h1{font-size:clamp(2.6rem,5.6vw,4.6rem);line-height:1.04;font-weight:700;color:#fff3e6;margin:0 0 22px;max-width:13ch}
+.hero p.lead{color:#ead9cf;font-size:1.12rem;max-width:44ch;line-height:1.7}
+.hero-actions{margin-top:30px;gap:14px}
+.promise{list-style:none;display:flex;flex-wrap:wrap;gap:10px 26px;padding:0;margin:34px 0 0;color:var(--zari-l);font-size:.95rem}
+.promise li{display:flex;align-items:center;gap:10px}
+.promise li::before{content:"";width:7px;height:7px;background:var(--zari);transform:rotate(45deg)}
+.arches{display:grid;grid-template-columns:1fr 1.18fr 1fr;gap:16px;align-items:end}
+.arch{display:block;border-radius:999px 999px 0 0;padding:6px;background:linear-gradient(160deg,#f3dfab,var(--zari) 40%,#8a6a2c);box-shadow:0 40px 70px -30px rgba(0,0,0,.6)}
+.arch img{width:100%;aspect-ratio:9/16;object-fit:cover;object-position:50% 18%;border-radius:999px 999px 0 0;border:3px solid var(--kumkum)}
+.arch.a1,.arch.a3{margin-bottom:34px}
+.arch.a2 img{aspect-ratio:9/17}
+@media (prefers-reduced-motion:no-preference){
+  .arch{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  .arch.a2{animation-delay:.12s}.arch.a3{animation-delay:.24s}
+  @keyframes rise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+}
+
+/* category circles */
+.circles-band{background:var(--rose);border:0;padding:72px 0 64px}
+.circles{gap:clamp(20px,5vw,72px)}
+.circle{width:clamp(130px,19vw,200px)}
+.circle .ring{padding:5px;background:conic-gradient(from 200deg,#f3dfab,var(--zari),#8a6a2c,var(--zari),#f3dfab);box-shadow:0 18px 40px -22px rgba(74,7,18,.55)}
+.circle img{border:4px solid var(--rose)}
+.circle b{font-family:var(--serif);font-size:1.5rem;color:var(--kumkum);margin-top:14px;font-weight:600}
+.circle:hover b{color:var(--sindoor)}
+
+/* product cards: arched photo, centred text */
+.edit{background:var(--blush);background-image:var(--jaal);padding:80px 0}
+.grid{gap:48px 30px}
+.card-img{border-radius:999px 999px 0 0;padding:4px;background:linear-gradient(160deg,#f3dfab,var(--zari) 45%,#9c7a36);aspect-ratio:auto}
+.card-img img,.card-img svg{aspect-ratio:3/4.3;border-radius:999px 999px 0 0;object-position:50% 15%}
+.card-body{padding:20px 6px 0}
+.card h3{font-family:var(--serif);font-weight:600;font-size:1.3rem;color:var(--kumkum);line-height:1.25}
+.card .price{color:var(--sindoor);font-weight:600;font-size:1rem}
+
+/* AI band */
+.ai-band{background:var(--jaal),var(--kumkum);color:#ead9cf;padding:70px 0}
+.ai-band h2{color:#fff3e6;font-size:clamp(1.9rem,3.6vw,2.8rem)}
+.ai-band p{font-size:1.08rem}
+
+/* values */
+.values-band{background:var(--rose);padding:80px 0}
+.values{gap:0;border-top:1px solid var(--zari);border-bottom:1px solid var(--zari)}
+.values>div{background:none;border:0;padding:34px 30px}
+.values>div+div{border-left:1px solid var(--line)}
+.values h3{font-size:1.5rem;color:var(--kumkum)}
+.values p{font-size:1rem}
+
+/* inner pages */
+.page-head{background:var(--jaal),var(--kumkum);color:#ead9cf;border:0;padding:56px 0 46px}
+.page-head h1{color:#fff3e6}
+.page-head p{color:var(--zari-l)}
+.filters h4,.pd-price,.checkout h2{font-family:var(--serif)}
+#f-cat button.on{color:var(--sindoor);font-weight:700}
+.pd-img{border:0;padding:5px;background:linear-gradient(160deg,#f3dfab,var(--zari) 45%,#9c7a36);border-radius:260px 260px 0 0}
+.pd-img #pd-main img{border-radius:254px 254px 0 0}
+.pd-img .thumbs{background:var(--rose);padding-top:8px}
+.pd-info h1{color:var(--kumkum);font-size:clamp(2rem,4vw,3rem)}
+.pd-price{color:var(--sindoor)}
+.sizes button.on{background:var(--kumkum);border-color:var(--kumkum)}
+
+/* footer */
+.site-footer{background:var(--jaal),var(--kumkum-2);color:#d9c3b9;border-top:3px double var(--zari)}
+.foot h4{color:var(--zari)}
+.foot a,.foot span{color:#d9c3b9}
+
+@media (max-width:900px){
+  .hero .wrap.hero-grid{grid-template-columns:1fr;gap:44px;padding-top:48px;padding-bottom:56px}
+  .hero h1{max-width:none}
+  .links{background:var(--kumkum);border-bottom:1px solid rgba(201,163,91,.45)}
+  .nav{height:72px}.links{top:72px}
+  .values>div+div{border-left:0;border-top:1px solid var(--line)}
+}
+@media (max-width:560px){
+  .logo{font-size:1.5rem}
+  .arches{gap:10px}.arch{padding:4px}.arch.a1,.arch.a3{margin-bottom:22px}
+  .orn-title::before,.orn-title::after{flex-basis:40px}
+  .hero-actions .btn{width:100%;text-align:center}
+  .pd-img{border-radius:180px 180px 0 0}.pd-img #pd-main img{border-radius:176px 176px 0 0}
+}

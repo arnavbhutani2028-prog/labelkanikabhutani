@@ -103,7 +103,7 @@ function renderChrome() {
   const here = location.pathname.split("/").pop() || "index.html";
   const link = (h, t) => `<a href="${h}" class="${here === h ? "active" : ""}">${t}</a>`;
   document.body.insertAdjacentHTML("afterbegin", `
-  <div class="announce">Free shipping across India · Complimentary alterations · Virtual trials available</div>
+  <div class="announce">Free shipping across India. Every outfit ships in 10 days.</div>
   <header class="site-header"><div class="wrap nav">
     <button class="menu-btn" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
     <a href="index.html" class="logo"><small class="top">${BRAND.logoTop}</small>${BRAND.logo}<small>${BRAND.tagline}</small></a>
@@ -124,7 +124,7 @@ function pageHome() {
   const feat = ["K06", "K12", "K21", "K44", "K01", "K15", "K31", "K47"].map(byId).filter(Boolean);
   $("#featured").innerHTML = feat.length ? feat.map(card).join("") : `<div class="soon"><span class="eyebrow">New collection</span><h2>Launching soon</h2><p>We're photographing our new festive edit. Book a free consultation to see pieces first.</p><a class="btn" href="consult.html">Book a consultation</a></div>`;
   if (!feat.length) { $("#featured").classList.add("is-empty"); const v = $("#view-all"); if (v) v.hidden = true; }
-  $("#hero-art").innerHTML = feat.length ? media(feat[0]) : `<div class="ph hero-ph"><span class="ph-mono">${esc(BRAND.logo)}</span><span class="ph-txt">New collection · coming soon</span></div>`;
+  const ha = $("#hero-art"); if (ha) ha.innerHTML = feat.length ? media(feat[0]) : "";
   if (!PRODUCTS.length) { const c = $("#cats-section"); if (c) c.hidden = true; }
 }
 
@@ -170,7 +170,7 @@ function pageProduct() {
       <h1>${esc(p.name)}</h1>
       <p class="pd-price">${inr(p.price)} <span>incl. all taxes</span></p>
       <p>${esc(p.desc)}</p>
-      <dl>${p.colour ? `<dt>Colour</dt><dd>${esc(p.colour)}</dd>` : ""}<dt>Fabric</dt><dd>${esc(p.fabric)}</dd>${p.pieces ? `<dt>The set</dt><dd>${esc(p.pieces)}</dd>` : ""}<dt>Perfect for</dt><dd>${p.events.map(cap).join(", ")}</dd><dt>Delivery</dt><dd>Ships in 3–5 weeks (made to order)</dd></dl>
+      <dl>${p.colour ? `<dt>Colour</dt><dd>${esc(p.colour)}</dd>` : ""}<dt>Fabric</dt><dd>${esc(p.fabric)}</dd>${p.pieces ? `<dt>The set</dt><dd>${esc(p.pieces)}</dd>` : ""}<dt>Perfect for</dt><dd>${p.events.map(cap).join(", ")}</dd><dt>Delivery</dt><dd>Ships in 10 days (made to order)</dd></dl>
       <label class="lbl">Size</label>
       <div class="sizes">${sizes.map((s, i) => `<button class="${i === (sizes.length > 1 ? 2 : 0) ? "on" : ""}" data-s="${s}">${s}</button>`).join("")}</div>
       <div class="qty-row"><label class="lbl" for="qty">Qty</label><input id="qty" type="number" min="1" max="5" value="1"></div>
