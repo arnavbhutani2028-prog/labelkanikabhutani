@@ -459,10 +459,19 @@ select:focus,input:focus,textarea:focus{outline:1px solid var(--ink);border-colo
 .wa-float{position:fixed;right:20px;bottom:20px;z-index:50;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 24px -8px rgba(0,0,0,.35)}
 .wa-float:hover{background:#1ebe5b}
 
-/* footer contact block */
-.foot-contact{text-align:center;padding-bottom:64px;margin-bottom:64px;border-bottom:1px solid var(--line)}
-.fc-big{display:inline-block;font-family:var(--serif);font-weight:400;font-size:clamp(2.8rem,7vw,5.2rem);line-height:1;color:var(--ink);text-decoration:none;letter-spacing:.01em}
-.fc-big:hover{color:var(--gold)}
-.foot-contact p{color:var(--taupe);max-width:46ch;margin:18px auto 28px;font-size:1rem}
-@media (max-width:560px){.foot-contact{padding-bottom:44px;margin-bottom:44px}}
 .site-footer .logo{justify-self:start;align-items:flex-start;text-align:left;display:inline-flex}
+
+/* footer: WhatsApp invitation above the Shop and Help links */
+.foot{grid-template-columns:1.3fr 1fr 1fr;grid-template-areas:"brand wa wa" "brand shop help"}
+.foot>div:nth-child(1){grid-area:brand}
+.foot>.foot-wa{grid-area:wa;padding-bottom:36px;border-bottom:1px solid var(--line)}
+.foot>div:nth-child(3){grid-area:shop}
+.foot>div:nth-child(4){grid-area:help}
+.fc-big{display:inline-block;font-family:var(--serif);font-weight:400;font-size:clamp(2rem,4.4vw,3.4rem);line-height:1.08;color:var(--ink);text-decoration:none;margin-bottom:0}
+.fc-big:hover{color:var(--gold)}
+.foot-wa p{color:var(--taupe);margin:14px 0 0;max-width:46ch}
+.foot .foot-wa a{margin-bottom:0;color:var(--ink)}
+@media (max-width:900px){
+  .foot{grid-template-columns:1fr 1fr;grid-template-areas:"brand brand" "wa wa" "shop help"}
+}
+@media (max-width:560px){.fc-big{font-size:2.1rem}}
