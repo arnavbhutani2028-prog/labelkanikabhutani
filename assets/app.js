@@ -100,7 +100,7 @@ function card(p) {
 
 
 // WhatsApp: when BRAND.whatsapp is set, "Contact us" opens a chat directly
-const waLink = (msg = "Hi House of K.A.D.J, I have a question about an outfit.") =>
+const waLink = (msg = "Hi House of K.A.D.J! I'd love some help choosing an outfit.") =>
   BRAND.whatsapp ? `https://wa.me/91${String(BRAND.whatsapp).replace(/\D/g, "").slice(-10)}?text=${encodeURIComponent(msg)}` : "";
 const contactHref = () => waLink() || "contact.html";
 
