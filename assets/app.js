@@ -117,7 +117,11 @@ function renderChrome() {
     <div class="nav-right"><a href="cart.html" class="cart-link" aria-label="Bag">Bag <span id="cart-count" hidden>0</span></a></div>
   </div></header>`);
   document.body.insertAdjacentHTML("beforeend", `
-  <footer class="site-footer"><div class="wrap foot">
+  <footer class="site-footer"><div class="wrap foot-contact">
+    <a class="fc-big" href="${contactHref()}" ${BRAND.whatsapp ? 'target="_blank" rel="noopener"' : ""}>Contact us</a>
+    <p>${BRAND.whatsapp ? "Questions about an outfit, sizing or delivery? Message us on WhatsApp and we will reply personally." : "Questions about an outfit, sizing or delivery? We are happy to help."}</p>
+    <a class="btn" href="${contactHref()}" ${BRAND.whatsapp ? 'target="_blank" rel="noopener"' : ""}>${BRAND.whatsapp ? "Chat on WhatsApp" : "Get in touch"}</a>
+  </div><div class="wrap foot">
     <div><div class="logo light"><small class="top">${BRAND.logoTop}</small>${BRAND.logo}<small>${BRAND.tagline}</small></div><p class="foot-story">${esc(BRAND.story)}</p></div>
     <div><h4>Shop</h4>${CATEGORIES.map(c => `<a href="shop.html?cat=${encodeURIComponent(c)}">${CAT_LABEL[c]}</a>`).join("")}</div>
     <div><h4>Help</h4><a href="stylist.html">AI Stylist</a><a href="consult.html">Book a consultation</a><a href="${contactHref()}" ${BRAND.whatsapp ? 'target="_blank" rel="noopener"' : ""}>Contact us</a><a href="shipping.html">Shipping</a><a href="refund.html">Returns &amp; refunds</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
