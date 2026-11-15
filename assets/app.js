@@ -296,7 +296,7 @@ function pageConsult() {
   const f = $("#consult-form");
   const today = new Date().toISOString().slice(0, 10);
   $("input[name=date]", f).min = today;
-  f.onsubmit = e => {
+  f.onsubmit = async e => {
     e.preventDefault();
     const bad = $$("[required]", f).find(x => !x.checkValidity());
     if (bad) { $("#c-err").textContent = "Please fill: " + (bad.dataset.label || bad.name); bad.focus(); return; }
@@ -307,9 +307,21 @@ function pageConsult() {
     const how = d.mode === "video" ? "Video call" : "Studio visit, " + BRAND.city;
     const msg = [`Hi House of K.A.D.J! I'd like to book a consultation (#${id}).`, `Name: ${d.name}`, `Phone: ${d.phone}`, `Email: ${d.email}`,
       `Type: ${how}`, `Date: ${when}, ${d.slot}`, d.wedding ? `Function date: ${d.wedding}` : "", d.notes ? `Looking for: ${d.notes}` : ""].filter(Boolean).join("\n");
+    const btn = $("button[type=submit]", f); if (btn) { btn.disabled = true; btn.textContent = "Booking…"; }
+    let delivered = false;
+    try {
+      const r = await fetch("/api/book", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, ...d }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok && j.error) { $("#c-err").textContent = j.error; if (btn) { btn.disabled = false; btn.textContent = "Confirm booking"; } return; }
+      delivered = !!j.delivered;
+    } catch {}
     const wa = waLink(msg);
-    if (wa) window.open(wa, "_blank", "noopener");
-    $("#consult-box").innerHTML = `<div class="empty-cart done"><div class="tick">✓</div><h2>Almost done, ${esc(d.name.split(" ")[0])}!</h2>
+    if (!delivered && wa) window.open(wa, "_blank", "noopener");
+    $("#consult-box").innerHTML = delivered
+      ? `<div class="empty-cart done"><div class="tick">✓</div><h2>You're booked, ${esc(d.name.split(" ")[0])}!</h2>
+         <p>${how} on <strong>${when}</strong> at <strong>${esc(d.slot)}</strong>.</p>
+         <p>We have your details and will message you on WhatsApp at ${esc(d.phone)} to confirm.</p><a class="btn" href="shop.html">Explore the collection</a></div>`
+      : `<div class="empty-cart done"><div class="tick">✓</div><h2>Almost done, ${esc(d.name.split(" ")[0])}!</h2>
       <p>${how} on <strong>${when}</strong> at <strong>${esc(d.slot)}</strong>.</p>
       ${wa ? `<p>Your booking details are ready in WhatsApp. Press <strong>Send</strong> there and we will confirm your slot personally.</p><a class="btn" href="${wa}" target="_blank" rel="noopener">Open WhatsApp to confirm</a>`
            : `<p>We have your request and will contact you on ${esc(d.phone)} to confirm.</p><a class="btn" href="stylist.html">Meanwhile, try the AI Stylist</a>`}</div>`;

@@ -31,3 +31,12 @@ Fill in contact details and the Microsoft Clarity project ID in `BRAND` at the t
 ## Security notes
 - `/api/stylist` loads the catalogue on the server (`api/_lib.js`); the browser only sends preferences and at most 6 chat messages of 500 characters. Picks are validated against real product IDs. Rate limited per IP.
 - `/api/create-order` recomputes prices from the server catalogue; `/api/verify-payment` checks the Razorpay signature with HMAC SHA256 before marking an order paid.
+
+
+### Consultation booking alerts
+| Variable | Purpose |
+|---|---|
+| `CALLMEBOT_APIKEY` | Key from CallMeBot (free WhatsApp alerts to your own number) |
+| `NOTIFY_WHATSAPP` | Your WhatsApp number with country code, e.g. `+919810395974` |
+
+If neither WhatsApp nor email alerts are configured, the booking form falls back to opening WhatsApp with the details pre-filled.
