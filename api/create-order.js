@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
   try { cart = priceCart(body.items); customer = validateCustomer(body.customer); }
   catch (e) { return res.status(400).json({ error: e.message }); }
 
-  const receipt = "KB" + Date.now().toString(36).toUpperCase();
+  const receipt = "HK" + Date.now().toString(36).toUpperCase();
   const r = await fetch("https://api.razorpay.com/v1/orders", {
     method: "POST",
     headers: { Authorization: "Basic " + Buffer.from(`${keyId}:${secret}`).toString("base64"), "Content-Type": "application/json" },

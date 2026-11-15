@@ -89,7 +89,7 @@ function art(p) {
 
 // Use a real photo when a product has one (p.img), otherwise the drawn illustration
 function media(p) {
-  return p.img ? `<img src="${p.img}" alt="${esc(p.name)}" loading="lazy">` : `<div class="ph" role="img" aria-label="${esc(p.name)} — photo coming soon"><span class="ph-mono">KB</span><span class="ph-txt">Photo coming soon</span></div>`;
+  return p.img ? `<img src="${p.img}" alt="${esc(p.name)}" loading="lazy">` : `<div class="ph" role="img" aria-label="${esc(p.name)} — photo coming soon"><span class="ph-mono">${esc(BRAND.logo)}</span><span class="ph-txt">Photo coming soon</span></div>`;
 }
 
 function card(p) {
@@ -112,7 +112,7 @@ function renderChrome() {
   </div></header>`);
   document.body.insertAdjacentHTML("beforeend", `
   <footer class="site-footer"><div class="wrap foot">
-    <div><div class="logo light"><small class="top">${BRAND.logoTop}</small>${BRAND.logo}<small>${BRAND.tagline}</small></div><p>Handcrafted festive and bridal wear, made-to-measure and shipped directly from our ${BRAND.city} atelier to you.</p></div>
+    <div><div class="logo light"><small class="top">${BRAND.logoTop}</small>${BRAND.logo}<small>${BRAND.tagline}</small></div><p>${esc(BRAND.story)} Handcrafted festive and bridal wear, made-to-measure and shipped directly from our ${BRAND.city} atelier to you.</p></div>
     <div><h4>Shop</h4>${CATEGORIES.map(c => `<a href="shop.html?cat=${encodeURIComponent(c)}">${CAT_LABEL[c]}</a>`).join("")}</div>
     <div><h4>Help</h4><a href="stylist.html">AI Stylist</a><a href="consult.html">Book a consultation</a><a href="contact.html">Contact us</a><a href="shipping.html">Shipping</a><a href="refund.html">Returns &amp; refunds</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>
   </div><p class="copy">© ${new Date().getFullYear()} ${BRAND.name}. All rights reserved.</p></footer>`);
@@ -124,7 +124,7 @@ function pageHome() {
   const feat = ["N29", "N01", "N14", "N32"].map(byId).filter(Boolean);
   $("#featured").innerHTML = feat.length ? feat.map(card).join("") : `<div class="soon"><span class="eyebrow">New collection</span><h2>Launching soon</h2><p>We're photographing our new festive edit. Book a free consultation to see pieces first.</p><a class="btn" href="consult.html">Book a consultation</a></div>`;
   if (!feat.length) { $("#featured").classList.add("is-empty"); const v = $("#view-all"); if (v) v.hidden = true; }
-  $("#hero-art").innerHTML = feat.length ? media(feat[0]) : `<div class="ph hero-ph"><span class="ph-mono">KB</span><span class="ph-txt">New collection · coming soon</span></div>`;
+  $("#hero-art").innerHTML = feat.length ? media(feat[0]) : `<div class="ph hero-ph"><span class="ph-mono">${esc(BRAND.logo)}</span><span class="ph-txt">New collection · coming soon</span></div>`;
   if (!PRODUCTS.length) { const c = $("#cats-section"); if (c) c.hidden = true; }
   $$(".cat-tile[data-img]").forEach(t => { const p = byId(t.dataset.img); if (p?.img) t.style.setProperty("--g", `linear-gradient(180deg,transparent 45%,rgba(30,10,14,.75)), url("${/^https?:/.test(p.img) ? p.img : new URL(p.img, location.href).href}") center/cover`); });
 }
@@ -266,7 +266,7 @@ function pageCart() {
   }
   // Used only while online payments are not configured on the server.
   function demoOrder(d) {
-    const id = "KB-DEMO-" + Date.now().toString(36).toUpperCase(), total = Cart.subtotal();
+    const id = "HK-DEMO-" + Date.now().toString(36).toUpperCase(), total = Cart.subtotal();
     Cart.clear(); done(d, id, total, false);
   }
   function loadRazorpay() {

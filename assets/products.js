@@ -1,8 +1,9 @@
 // ===== Store config =====
 const BRAND = {
- name: "Label Kanika Bhutani",
- logo: "Kanika Bhutani",
- logoTop: "Label",
+ name: "House of KADJ",
+ logo: "KADJ",
+ logoTop: "House of",
+ story: "House of KADJ is a family label, named after the family members who started it together.",
  tagline: "Festive & Bridal Couture",
  city: "New Delhi",
  // Contact details shown on the Contact page and footer — fill these in.
