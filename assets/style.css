@@ -423,3 +423,4 @@ h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.005em}
   .hero-actions .btn{width:100%;text-align:center}
   .pd-img{border-radius:180px 180px 0 0}.pd-img #pd-main img{border-radius:176px 176px 0 0}
 }
+.foot-story{font-family:var(--serif);font-style:italic;font-size:1.12rem;line-height:1.65;color:#ead9cf;max-width:46ch}

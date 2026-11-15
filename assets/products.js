@@ -3,7 +3,7 @@ const BRAND = {
  name: "House of K.A.D.J",
  logo: "K.A.D.J",
  logoTop: "House of",
- story: "House of K.A.D.J is a family label, named after the family members who started it together.",
+ story: "Couture for the days that become memories. In our New Delhi atelier, zari is couched by hand, every mirror is set one at a time and each hem is cut to your measurements, so what arrives at your door was only ever made for you.",
  tagline: "Festive & Bridal Couture",
  city: "New Delhi",
  // Contact details shown on the Contact page and footer — fill these in.
