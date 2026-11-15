@@ -427,7 +427,6 @@ select:focus,input:focus,textarea:focus{outline:1px solid var(--ink);border-colo
   .logo{font-size:1.75rem;justify-self:center}
   .logo small{font-size:.48rem;letter-spacing:.32em}
   .feature{grid-template-columns:1fr}.feature .ph{min-height:420px}
-  .values>div+div{border-left:0;border-top:1px solid var(--line);padding-top:28px;margin-top:28px}
   .foot{grid-template-columns:1fr 1fr;gap:36px}.foot>div:first-child{grid-column:1/-1}
 }
 @media (max-width:560px){
@@ -446,3 +445,16 @@ select:focus,input:focus,textarea:focus{outline:1px solid var(--ink);border-colo
   .promise{flex-direction:column;align-items:center;gap:6px}
   .promise li+li::before{display:none}
 }
+
+/* values: always one row, headings on a single line */
+.values{grid-template-columns:repeat(3,1fr);align-items:start}
+.values>div{padding:8px clamp(14px,3vw,36px)}
+.values h3{font-size:clamp(1.05rem,2.1vw,1.45rem);white-space:nowrap}
+.values p{font-size:clamp(.82rem,1.4vw,.95rem)}
+@media (max-width:560px){
+  .values{grid-template-columns:1fr}
+  .values h3{white-space:normal}
+  .values>div+div{border-left:0;border-top:1px solid var(--line);padding-top:26px;margin-top:26px}
+}
+.wa-float{position:fixed;right:20px;bottom:20px;z-index:50;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 24px -8px rgba(0,0,0,.35)}
+.wa-float:hover{background:#1ebe5b}

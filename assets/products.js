@@ -9,6 +9,7 @@ const BRAND = {
  // Contact details shown on the Contact page and footer — fill these in.
  email: "",
  phone: "",
+ whatsapp: "", // 10-digit WhatsApp number, e.g. "9876543210" — turns every "Contact us" link into a WhatsApp chat
  instagram: "",
  // Microsoft Clarity project ID (clarity.microsoft.com → Settings → Overview). Leave empty to disable.
  clarityId: "z9h4vlt51s"
