@@ -103,12 +103,12 @@ function renderChrome() {
   const here = location.pathname.split("/").pop() || "index.html";
   const link = (h, t) => `<a href="${h}" class="${here === h ? "active" : ""}">${t}</a>`;
   document.body.insertAdjacentHTML("afterbegin", `
-  <div class="announce">Free shipping across India. Every outfit ships in 10 days.</div>
+  <div class="announce">Complimentary shipping across India · Every outfit ships in 10 days</div>
   <header class="site-header"><div class="wrap nav">
     <button class="menu-btn" aria-label="Menu" onclick="document.body.classList.toggle('nav-open')">☰</button>
+    <nav class="links">${link("shop.html", "Shop")}${link("stylist.html", "AI Stylist")}${link("consult.html", "Book a consultation")}</nav>
     <a href="index.html" class="logo"><small class="top">${BRAND.logoTop}</small>${BRAND.logo}<small>${BRAND.tagline}</small></a>
-    <nav class="links">${link("shop.html", "Shop")}${link("stylist.html", "AI Stylist ✦")}${link("consult.html", "Book Consultation")}</nav>
-    <a href="cart.html" class="cart-link" aria-label="Cart">Bag <span id="cart-count" hidden>0</span></a>
+    <div class="nav-right"><a href="cart.html" class="cart-link" aria-label="Bag">Bag <span id="cart-count" hidden>0</span></a></div>
   </div></header>`);
   document.body.insertAdjacentHTML("beforeend", `
   <footer class="site-footer"><div class="wrap foot">
