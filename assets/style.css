@@ -226,7 +226,7 @@ dt{color:var(--muted)}dd{margin:0}
 #hero-art img{width:100%;aspect-ratio:3/4;object-fit:cover}
 .cat-tile::before{background:var(--g)}
 
-/* House of KADJ logo */
+/* House of K.A.D.J logo */
 .logo{font-size:1.65rem;letter-spacing:.02em}
 .logo small.top{margin:0 0 3px;font-size:.62rem;letter-spacing:.5em;color:var(--gold)}
 @media (max-width:560px){.logo{font-size:1.3rem}.logo small{font-size:.5rem;letter-spacing:.25em}}
@@ -276,7 +276,7 @@ dt{color:var(--muted)}dd{margin:0}
 .checkout small a{color:var(--maroon)}
 @media (max-width:560px){.policy{padding:22px 18px;margin:20px 0 50px}}
 
-/* House of KADJ wordmark */
+/* House of K.A.D.J wordmark */
 .logo{letter-spacing:.14em}
 .logo small.top{letter-spacing:.35em;text-transform:uppercase}
 .ph-mono{font-size:1.15rem;letter-spacing:.12em;width:96px;height:96px}

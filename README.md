@@ -1,4 +1,4 @@
-# House of KADJ — Festive & Bridal Couture (D2C)
+# House of K.A.D.J — Festive & Bridal Couture (D2C)
 
 A direct-to-consumer festive and bridal wear label: ghararas, anarkalis, kurta sets, co-ords and jewellery, sold straight from the atelier to the bride, with an **AI Bridal Stylist**.
 

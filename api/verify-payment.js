@@ -1,7 +1,7 @@
 // POST /api/verify-payment — verifies the Razorpay signature (HMAC SHA256), marks the order paid,
 // and emails a confirmation to the customer and the store via Resend.
 // Env: RAZORPAY_KEY_SECRET, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY,
-//      RESEND_API_KEY, RESEND_FROM (e.g. "House of KADJ <orders@yourdomain>"), ORDER_NOTIFY_EMAIL (optional).
+//      RESEND_API_KEY, RESEND_FROM (e.g. "House of K.A.D.J <orders@yourdomain>"), ORDER_NOTIFY_EMAIL (optional).
 const crypto = require("crypto");
 const { rateLimit, tooMany, readBody, str, supabaseConfigured, supabase } = require("./_lib");
 
@@ -62,8 +62,8 @@ module.exports = async (req, res) => {
         <tr><td><b>Total</b></td><td align="right"><b>${inr(order.amount_inr)}</b></td></tr></table>
       <p>Delivering to: ${esc(order.address)}, ${esc(order.city)} ${esc(order.pin)}</p>
       <p>Our stylist will call you on ${esc(order.phone)} within 24 hours to confirm measurements.</p>
-      <p>— House of KADJ</p></div>`;
-    await sendEmail(order.email, `Order confirmed #${order.receipt} · House of KADJ`, html);
+      <p>— House of K.A.D.J</p></div>`;
+    await sendEmail(order.email, `Order confirmed #${order.receipt} · House of K.A.D.J`, html);
     await sendEmail(process.env.ORDER_NOTIFY_EMAIL, `New paid order #${order.receipt} (${inr(order.amount_inr)})`, html);
   }
   return res.status(200).json({ ok: true, receipt: order ? order.receipt : null, amount: order ? order.amount_inr : null });

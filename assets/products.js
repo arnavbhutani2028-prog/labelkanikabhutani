@@ -1,9 +1,9 @@
 // ===== Store config =====
 const BRAND = {
- name: "House of KADJ",
- logo: "KADJ",
+ name: "House of K.A.D.J",
+ logo: "K.A.D.J",
  logoTop: "House of",
- story: "House of KADJ is a family label, named after the family members who started it together.",
+ story: "House of K.A.D.J is a family label, named after the family members who started it together.",
  tagline: "Festive & Bridal Couture",
  city: "New Delhi",
  // Contact details shown on the Contact page and footer — fill these in.
