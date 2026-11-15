@@ -3,9 +3,9 @@ const BRAND = {
  name: "House of K.A.D.J",
  logo: "K.A.D.J",
  logoTop: "House of",
- story: "Couture for the days that become memories. In our New Delhi atelier, zari is couched by hand, every mirror is set one at a time and each hem is cut to your measurements, so what arrives at your door was only ever made for you.",
+ story: "Couture for the days that become memories. In our Gurgaon atelier, zari is couched by hand, every mirror is set one at a time and each hem is cut to your measurements, so what arrives at your door was only ever made for you.",
  tagline: "Festive & Bridal Couture",
- city: "New Delhi",
+ city: "Gurgaon",
  // Contact details shown on the Contact page and footer — fill these in.
  email: "",
  phone: "",
